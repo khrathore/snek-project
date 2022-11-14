@@ -43,9 +43,5 @@ F-string that will give the student group the finalized event budget and summary
 Argument parser - Khushboo
 sequence unpacking 
 
-
-
-main()
-ArgParser
 if __name__ == "__main__"
 '''
