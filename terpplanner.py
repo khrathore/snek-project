@@ -19,7 +19,7 @@ class User:
             if it isn't, throw an error
         '''
         
-    def org_check(self, filepath):
+    def org_check(self):
         '''
         Org_check: - With Statement - Rabindra
             Takes the org name
@@ -28,60 +28,68 @@ class User:
         '''
 class Event:
     
-    def __init__(self, location, evlength, food=False, equip=False, music=False, decor=False):
+    def __init__(self, location, evlength, evbudget, food=False, equip=False, music=False, decor=False):
         '''
         Init method - Optional Param - Sandra
             Establish the location
             The length of the event calculations maybe? - hourly pay for the location 
             Food boolean optional parameter default false - optional parameter 
-        '''         
-'''    
-class Event:
-    To create the event and get the specifics for the student group
+        '''
+        
+    def loc_checker(self):
+        '''
+        Location checker - List Comprehension - Sandra
+            Confirms if the location is on campus
+            Will have the with statement
+            Ask the user on the budget for location
+            Create a List comprehension that gives the options available based on the user’s budget.
+            User then picks the location that suits them
+        '''
+        
+    def event_id(self, idset):
+        '''
+        Event_ID(set, self) - Sets - Rabindra
+            Give an rand event ID for each event, also add it to a set of IDS
+            check intersection or sth of the new random number and the set of IDs
+            if the event ID already exists, do another randomization
+        '''
+        
+    def budget_tracker(self, budget):
+        '''
+        Budget tracker - Conditional Expression - Palrika
+            Placeholder for the different categories of the overall budget
+            estimate()
+            Only runs if the food attribute boolean is true
+            Conditional expression if food= true
+            Asks for an estimate of how much the food gonna cost
+            if budget trackers becomes negative call fundraise  
+        '''
+        
+    def fundraise(self):
+       '''
+        Fundraise - f-string - Kabindra
+            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
+        '''
 
-
-
-Location checker - List Comprehension - Sandra
-    Confirms if the location is on campus
-    Will have the with statement
-    Ask the user on the budget for location
-    Create a List comprehension that gives the options available based on the user’s budget.
-    User then picks the location that suits them
-    
-Event_ID(set, self) - Sets - Rabindra
-    Give an rand event ID for each event, also add it to a set of IDS
-    check intersection or sth of the new random number and the set of IDs
-    if the event ID already exists, do another randomization
-    
-
-Budget tracker - Conditional Expression - Palrika
-    Placeholder for the different categories of the overall budget
-    estimate()
-    Only runs if the food attribute boolean is true
-    Conditional expression if food= true
-    Asks for an estimate of how much the food gonna cost
-    if budget trackers becomes negative call fundraise 
-
-Budget_chart - Khushboo - Pyplot
-    Create a plot of the money allocation
-    
-Fundraise - f-string - Kabindra
-    If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
-'''
-
-
-
-'''
 class Budget:
-    To ask for and keep a track of the group’s budget, and make sure that they don’t go over budget 
+    
+    def __init__(self, type, money):
+        '''
+        Init() method - Khushboo
+        '''
+    def __sub__(self, other):
+        '''
+        Sub magic() method - Magic Method - Palrika
+            Error check for sub to check that they are two budget objects
+            Will call and subtract from the budget tracker method
+        '''
+    
+    def bud_vis(self):
+        '''     
+            Budget_chart - Khushboo - Pyplot
+                Create a plot of the money allocation
+        '''
 
-Init() method - Khushboo
-
-Sub magic() method - Magic Method - Palrika
-    Error check for sub to check that they are two budget objects
-    Will call and subtract from the budget tracker method
-
-'''
 def main(fname, lname, email, orgname):
     # SANDRA Code that runs the function and takes user prompts and writes to a different file
     '''
@@ -93,6 +101,7 @@ def main(fname, lname, email, orgname):
 def parse_args(comline):
     # KABINDRA Parses the arguments of the command line that are giving the user information. 
     # Shows the class and sequence unpacking
+    return
 
   
 if __name__ == "__main__":
