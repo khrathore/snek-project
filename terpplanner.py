@@ -26,17 +26,20 @@ class User:
             with statement to read the file
             compares to make sure it's an active campus org, otherwises errors
         '''
-        
-        
-
+class Event:
+    
+    def __init__(self, location, evlength, food=False, equip=False, music=False, decor=False):
+        '''
+        Init method - Optional Param - Sandra
+            Establish the location
+            The length of the event calculations maybe? - hourly pay for the location 
+            Food boolean optional parameter default false - optional parameter 
+        '''         
 '''    
 class Event:
     To create the event and get the specifics for the student group
 
-Init method - Optional Param - Sandra
-    Establish the location
-    The length of the event calculations maybe? - hourly pay for the location 
-    Food boolean optional parameter default false - optional parameter 
+
 
 Location checker - List Comprehension - Sandra
     Confirms if the location is on campus
@@ -65,6 +68,9 @@ Budget_chart - Khushboo - Pyplot
 Fundraise - f-string - Kabindra
     If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
 '''
+
+
+
 '''
 class Budget:
     To ask for and keep a track of the group’s budget, and make sure that they don’t go over budget 
