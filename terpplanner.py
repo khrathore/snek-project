@@ -1,23 +1,35 @@
-'''
-Terp Planner: helps a student org plan their event on campus
+
+# Terp Planner: helps a student org plan their event on campus
 
 class User:
-
-Init method - Palrika
-    Takes in name (first) and (last)
-    email
-    organization name
     
-Email_check: - Regex - Khushboo
-    check if it's a umd.edu email using a regex
-    if it isn't, throw an error
-    
-Org_check: - With Statement - Rabindra
-    Takes the org name
-    with statement to read the file
-    compares to make sure it's an active campus org, otherwises errors
-       
+    def __init__(self, fname, lname, email, org):
+        '''
+        Init method - Palrika
+            Takes in 
+                name (first) and (last)
+                email
+                organization name
+        '''
+        
+    def email_check(self):
+        '''
+        Email_check: - Regex - Khushboo
+            check if it's a umd.edu email using a regex
+            if it isn't, throw an error
+        '''
+        
+    def org_check(self, filepath):
+        '''
+        Org_check: - With Statement - Rabindra
+            Takes the org name
+            with statement to read the file
+            compares to make sure it's an active campus org, otherwises errors
+        '''
+        
+        
 
+'''    
 class Event:
     To create the event and get the specifics for the student group
 
@@ -52,7 +64,8 @@ Budget_chart - Khushboo - Pyplot
     
 Fundraise - f-string - Kabindra
     If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
-
+'''
+'''
 class Budget:
     To ask for and keep a track of the group’s budget, and make sure that they don’t go over budget 
 
@@ -62,13 +75,21 @@ Sub magic() method - Magic Method - Palrika
     Error check for sub to check that they are two budget objects
     Will call and subtract from the budget tracker method
 
-Main - Sandra
+'''
+def main(fname, lname, email, orgname):
+    # SANDRA Code that runs the function and takes user prompts and writes to a different file
+    '''
     loop
         write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
-    
-Argument parser - ArgParse - Kabindra
-    sequence unpacking 
+    '''
 
-if __name__ == "__main__"
-'''
+def parse_args(comline):
+    # KABINDRA Parses the arguments of the command line that are giving the user information. 
+    # Shows the class and sequence unpacking
+
+  
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
+    # I think for main, we should take the user's info and then everything else will be prompt based
+    main(args.fname, args.lname, args.email, args.orgname)
