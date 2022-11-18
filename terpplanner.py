@@ -139,8 +139,13 @@ def main(fname, lname, email, orgname):
     '''
 
 def parse_args(comline):
+    """
     # KABINDRA Parses the arguments of the command line that are giving the user information. 
+    
+    Args :
+        comline(str) : arguments users input in the command line
     # Shows the class and sequence unpacking
+    """
     return
 
   
