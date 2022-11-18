@@ -144,13 +144,16 @@ class Event:
     def fundraise(self):
        """
         Fundraise - f-string - Kabindra
+        
+        Side Effects:
             If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
         """
         
     def bud_vis(self):
         """
         Khushboo: pyplot usage, creates a diagram of the budget distribution     
-        returns: a graph
+        Side effects: 
+            Shows a bar graph of spending
 
         """
 
@@ -167,7 +170,13 @@ class Budget:
     
     def __init__(self, type, money):
         """
-        Init() method - Khushboo
+        Creates a budget object
+        Args:
+            type(str): The category of the budget
+            money(float): The budgeted amount for that category
+            
+        Side efffects:
+            Creates a budget object
         
         """
     def __sub__(self, other):
