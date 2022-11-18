@@ -19,12 +19,16 @@ class User:
             if it isn't, throw an error
         '''
         
-    def org_check(self):
+    def org_check(self, org_name):
         '''
-        Org_check: - With Statement - Rabindra
-            Takes the org name
-            with statement to read the file
-            compares to make sure it's an active campus org, otherwises errors
+        Takes the org name
+        with statement to read the file
+        compares to make sure it's an active campus org, otherwises errors
+        
+        Args:
+        org_name(str): Name of organization
+        
+        Returns: Boolean Value
         '''
 class Event:
     """ Plans the event for a student organization based on different categories.
@@ -87,6 +91,15 @@ class Event:
             Give an rand event ID for each event, also add it to a set of IDS
             check intersection or sth of the new random number and the set of IDs
             if the event ID already exists, do another randomization
+            
+        Args:
+            idset(set of INT): A set of event ids of events on campus
+        
+        Side Effects:
+            Creates a new set of event ids for new events.
+        
+        Returns: event_id(int)
+            
         '''
         
     def budget_tracker(self, budget):
