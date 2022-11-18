@@ -61,7 +61,7 @@ class Event:
         default is False.
         
     """
-    def __init__(self, location, evlength, evbudget, food=False, equip=False, music=False, supplies=False):
+    def __init__(self, location, evlength, evbudget,  full_budget, food=False, equip=False, music=False, supplies=False):
         """ Initializes the Event Class. - Sandra
         Args:
             location(str): The location of the event.
@@ -79,12 +79,12 @@ class Event:
         Side effects:
             Creates the location, evlength, evbudget, food, equip, music, and 
             supplies attributes.
-        This method will showcase the  Optional Parameter that will be used to 
-        determine the budgets for the different event budget categories. 
+            This method will showcase the  Optional Parameter that will be used to 
+            determine the budgets for the different event budget categories. 
             
             Establish the location
-            The length of the event calculations maybe? - hourly pay for the location 
-            Food boolean optional parameter default false - optional parameter 
+            The length of the event calculations - hourly pay for the location 
+            budget categories boolean optional parameter default false
         """
         
     def loc_checker(self, filepath):
@@ -94,7 +94,7 @@ class Event:
         Return:
             str: The specific location that is within the given budget
         Confirms if the location is on campus
-        Will have the with statement
+        Will have the with statement for a csv file with UTF-8 encoding
         Ask the user on the budget for location
         User then picks the location that suits them
         This method will showcase a List Comprehension that gives the location options available 
@@ -171,8 +171,12 @@ def main(fname, lname, email, orgname):
         lname(str): The user's last name.
         email(str): The user's email.
         orgname(str):The organization the user is associated with.
-    loop
-        write to a doc the info of the event (including budget)
+    Return:
+        file: A txt file containg the completed event plan with budget details.
+    The user will be prompted to fill in the corresponding information for their event to determine the
+    budget calculations of the event.
+    In order to achieve this we will impllement a loop
+    Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
 
