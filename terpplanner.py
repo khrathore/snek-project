@@ -18,11 +18,16 @@ class User:
     
     def __init__(self, fname, lname, email, org):
         """
-        Init method - Palrika
-            Takes in 
-                name (first) and (last)
-                email
-                organization name
+        Creates a User class. - Palrika 
+            
+        Args:  
+            fname (str): The first name of the user.
+            lname (str): The last name of the user.
+            email (str): The email address of the user.
+            org (str): The name of the organziation that he user is planning the event for.
+            
+        Side effects:
+            A user object is created with the aforementioned attributes.
         """
         
     def email_check(self):
@@ -60,6 +65,12 @@ class Event:
         supplies(bool):Determines whether the event will need supplies;
         default is False.
         
+    Methods: 
+        loc_checker(): 
+        event_id)(): 
+        budget_tracker():
+        fundraise():
+        bud_vis(): 
     """
     def __init__(self, location, evlength, evbudget,  full_budget, food=False, equip=False, music=False, supplies=False):
         """ Initializes the Event Class. - Sandra
@@ -120,12 +131,14 @@ class Event:
     def budget_tracker(self, budget):
         """
         Budget tracker - Conditional Expression - Palrika
-            Placeholder for the different categories of the overall budget
-            estimate()
-            Only runs if the food attribute boolean is true
-            Conditional expression if food= true
-            Asks for an estimate of how much the food gonna cost
-            if budget trackers becomes negative call fundraise  
+        Keeps track of the budget and calls the fundraise() method using a conditional
+        expression if the budget falls below 0.   
+            
+        Args: 
+            budget (float): User-inputted funds they have to plan the event.
+            
+        Side effect:
+            Creates new budget object
         """
         
     def fundraise(self):
@@ -155,12 +168,18 @@ class Budget:
     def __init__(self, type, money):
         """
         Init() method - Khushboo
+        
         """
     def __sub__(self, other):
         """
         Sub magic() method - Magic Method - Palrika
-            Error check for sub to check that they are two budget objects
-            Will call and subtract from the budget tracker method
+        Compares the given budget with contemporary budget and raise error if the user overspends.
+        
+        Args:
+            other(Budget): The amount of money the user uses while planning the event.
+            
+        Raises:
+            type: If user overspends, this method will raise a type error.
         """
 
 def main(fname, lname, email, orgname):
