@@ -66,11 +66,11 @@ class Event:
         default is False.
         
     Methods: 
-        loc_checker(): 
-        event_id)(): 
-        budget_tracker():
-        fundraise():
-        bud_vis(): 
+        loc_checker(str): Determines the best location to hold an event based on a given budget
+        event_id)(set of INT):  Give an random event ID for each event, also add it to a set of IDS.
+        budget_tracker(float):Keeps track of the budget to help the user to not overspend.  
+        fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
+        bud_vis(): Creates a diagram of the budget distribution.
     """
     def __init__(self, location, evlength, evbudget,  full_budget, food=False, equip=False, music=False, supplies=False):
         """ Initializes the Event Class. - Sandra
