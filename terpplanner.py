@@ -87,7 +87,6 @@ class Event:
         
     def event_id(self, idset):
         '''
-        Event_ID(set, self) - Sets - Rabindra
             Give an rand event ID for each event, also add it to a set of IDS
             check intersection or sth of the new random number and the set of IDs
             if the event ID already exists, do another randomization
