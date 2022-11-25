@@ -29,6 +29,10 @@ class User:
         Side effects:
             A user object is created with the aforementioned attributes.
         """
+        self.fname = fname
+        self.lname = lname
+        self.email = email
+        self.org = org
         
     def email_check(self):
         """
@@ -127,7 +131,16 @@ class Event:
         Returns: event_id(int)
             
         """
+    
+    def fundraise(self):
+       """
+        Fundraise - f-string - Kabindra
         
+        Side Effects:
+            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
+        """
+        
+     
     def budget_tracker(self, budget):
         """
         Budget tracker - Conditional Expression - Palrika
@@ -140,14 +153,9 @@ class Event:
         Side effect:
             Creates new budget object
         """
-        
-    def fundraise(self):
-       """
-        Fundraise - f-string - Kabindra
-        
-        Side Effects:
-            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
-        """
+        if budget < 0:
+            self.fundraise()
+            
         
     def bud_vis(self):
         """
