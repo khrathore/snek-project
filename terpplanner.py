@@ -1,5 +1,7 @@
 
 # Terp Planner: helps a student org plan their event on campus
+from argparse import ArgumentParser
+import re
 import sys
 
 class User:
@@ -36,11 +38,20 @@ class User:
         
     def email_check(self):
         """
-        Khushboo: Uses a regex expression to check whether the email provided is a umd one.
+        Uses a regex expression to check whether the email provided is a umd one.
         
-        Errors:
-            None: If the program does not find a match, it gets angee
+        
+        Raises:
+            ValueError If the program does not find a matching email
         """
+        patt1 = re.compile(r"^[^@]+@terpmail.umd.edu")
+        patt2 = re.compile(r"^[^@]+@umd.edu")
+        match1 = patt1.search(self.email)
+        match2 = patt2.search(self.email)
+        if match1 or match2:
+            return True
+        else:
+            raise ValueError("The email you provided is not valid.")
         
     def org_check(self):
         """
