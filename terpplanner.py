@@ -87,7 +87,8 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, location, evlength, evbudget,  full_budget, food=False, equip=False, music=False, supplies=False):
+    def __init__(self, location, evbudget,  full_budget, 
+                 food=False, equip=False, music=False, supplies=False):
         """ Initializes the Event Class. - Sandra
         Args:
             location(str): The location of the event.
@@ -107,25 +108,35 @@ class Event:
             supplies attributes.
             This method will showcase the  Optional Parameter that will be used to 
             determine the budgets for the different event budget categories. 
-            
-            Establish the location
-            The length of the event calculations - hourly pay for the location 
-            budget categories boolean optional parameter default false
         """
+        self.location=[]
+        self.evbudget=evbudget
+        self.food=food
+        self.equip=equip
+        self.music=music
+        self.supplies=supplies
+        full_budget=[]
+            
         
-    def loc_checker(self, filepath):
+    def loc_checker(self, filepath, room_budget):
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
             filepath(str):A path to a file of locations on campus.
         Return:
             str: The specific location that is within the given budget
         Confirms if the location is on campus
-        Will have the with statement for a csv file with UTF-8 encoding
+        Will have the with statement for a txt file with UTF-8 encoding
         Ask the user on the budget for location
         User then picks the location that suits them
         This method will showcase a List Comprehension that gives the location options available 
         based on a given budget.
         """
+        with open(filepath, "r",encoding= "utf-8") as f:
+            for line in f:
+                values= line.split()
+                self.location.append({"location":values[0], "rent":float(values[1])})
+            best_avail=[l for l in self.location if l["rent"]==room_budget] 
+            return best_avail[0:] 
         
     def event_id(self, idset):
         """
@@ -226,6 +237,14 @@ def main(fname, lname, email, orgname):
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
+    fname=input("Enter your First Name: ")
+    lname=input("Enter your Last Name: ")
+    email=input("Enter your Email: ")
+    orgname=input("Enter your organization's name: ")
+    
+    
+    
+    
 
 def parse_args(comline):
     """
