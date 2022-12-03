@@ -237,10 +237,11 @@ def main(fname, lname, email, orgname):
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
-    fname=input("Enter your First Name: ")
-    lname=input("Enter your Last Name: ")
-    email=input("Enter your Email: ")
-    orgname=input("Enter your organization's name: ")
+    user=User()
+    user.fname=input("Enter your First Name: ")
+    user.lname=input("Enter your Last Name: ")
+    user.email=input("Enter your Email: ")
+    user.org=input("Enter your organization's name: ")
     
     
     
