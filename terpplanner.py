@@ -237,14 +237,40 @@ def main(fname, lname, email, orgname):
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
-    user=User()
-    user.fname=input("Enter your First Name: ")
-    user.lname=input("Enter your Last Name: ")
-    user.email=input("Enter your Email: ")
-    user.org=input("Enter your organization's name: ")
+    welcom_msg=f"Welcome to Terp Planner {fname} {lname}!"
+    # need to implement the email and org check
+    begin=input("Do you want to plan an event? (yes/no)")
+    while begin == begin.lower("yes"):
+        name=input("Please provide the name of the event: ")
+        event=Event()
+        budget=float(input("Please provide the budget for your event: ")
+        if event.evbudget(budget) == True:
+            event.budget_tracker() 
+            
+        p2=input("Do you want to have a food budget?(yes/no): ")
+        if p2== p2.lower("yes"):
+            if event.food(p2)==True:
+                food_bud=float(input("Please provide the budget for food: ")
+                if event.food(food_bud)==True:
+        
+        p3=input("Do you want to have an equipment budget?(yes/no)")
+        if p3==p3.lower("yes"):
+            if event.equip(p3) == True:
+                equip_bud=float(input("Please provide the budget for equipment: "))
+        p4= input("Do you want to have a music budget?(yes/no)")
+        if p4==p4.lower("yes"):
+            if event.music == True:
+                music_bud=float(input("Please provide the budget for music: "))
+                
+        p5= input("Do you want to have a supplies budget?(yes/no)")
+        if p5==p5.lower("yes"):
+            if event.supplies== True:
+                supp_bud=float(input("Please provide the budget for supplies: "))
     
-    
-    
+    f = open(“event_plan.txt”, “w”, encoding=”utf-8”)
+    f.write()
+    f.close()
+
     
 
 def parse_args(comline):
