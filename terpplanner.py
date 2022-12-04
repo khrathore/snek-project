@@ -209,6 +209,9 @@ class Budget:
             Creates a budget object
         
         """
+        self.type = type
+        self.money = money
+        
     def __sub__(self, other):
         """
         Sub magic() method - Magic Method - Palrika
