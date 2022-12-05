@@ -49,7 +49,7 @@ class User:
         match1 = patt1.search(self.email)
         match2 = patt2.search(self.email)
         if match1 or match2:
-            return True
+            return True 
         else:
             raise ValueError("The email you provided is not valid.")
         
@@ -156,7 +156,8 @@ class Event:
     
     def fundraise(self):
        """
-        Fundraise - f-string - Kabindra
+        Fundraise - f-string - Kabindra #lets DELETE this method based on what the gradescope feedback we got 
+                                        we can add the f-string to the budget_tracker method
         
         Side Effects:
             If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
@@ -223,6 +224,13 @@ class Budget:
         Raises:
             type: If user overspends, this method will raise a type error.
         """
+        
+        check = self.budget - other.budget
+        if check < 0:
+            raise TypeError 
+        else:
+            return check
+    
 
 def main(fname, lname, email, orgname):
     """ Calculates the overall event budget based on user input and then writes the completed
@@ -246,31 +254,35 @@ def main(fname, lname, email, orgname):
     while begin == begin.lower("yes"):
         name=input("Please provide the name of the event: ")
         event=Event()
-        budget=float(input("Please provide the budget for your event: ")
+        budget=float(input("Please provide the budget for your event: "))
         if event.evbudget(budget) == True:
             event.budget_tracker() 
+        
+        #else:
+            #print("Please provide your budget to move forward.")
             
-        p2=input("Do you want to have a food budget?(yes/no): ")
+        p2=input("Does your event have a food budget? (yes/no): ")
         if p2== p2.lower("yes"):
             if event.food(p2)==True:
-                food_bud=float(input("Please provide the budget for food: ")
+                food_bud=float(input("Please provide the budget for food: "))
                 if event.food(food_bud)==True:
+                    
         
         p3=input("Do you want to have an equipment budget?(yes/no)")
         if p3==p3.lower("yes"):
             if event.equip(p3) == True:
                 equip_bud=float(input("Please provide the budget for equipment: "))
-        p4= input("Do you want to have a music budget?(yes/no)")
+        p4= input("Do you want to have a music budget? (yes/no)")
         if p4==p4.lower("yes"):
             if event.music == True:
                 music_bud=float(input("Please provide the budget for music: "))
                 
-        p5= input("Do you want to have a supplies budget?(yes/no)")
+        p5= input("Do you want to have a supplies budget? (yes/no)")
         if p5==p5.lower("yes"):
             if event.supplies== True:
                 supp_bud=float(input("Please provide the budget for supplies: "))
     
-    f = open(“event_plan.txt”, “w”, encoding=”utf-8”)
+    f = open('event_plan', 'w', encoding='utf-8')
     f.write()
     f.close()
 
