@@ -110,7 +110,7 @@ class Event:
             determine the budgets for the different event budget categories. 
         """
         self.location=[]
-        self.evbudget=evbudget
+        self.evbudget=Budget("Event",evbudget)
         self.food=food
         self.equip=equip
         self.music=music
