@@ -173,6 +173,8 @@ class Event:
             If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
         """
         
+        
+        
      
     def budget_tracker(self, budget):
         """
@@ -306,7 +308,13 @@ def parse_args(comline):
         comline(str) : arguments users input in the command line
     # Shows the class and sequence unpacking
     """
-    return
+    parser = ArgumentParser()
+    parser.add_argument("fname", help="first name of the student")
+    parser.add_argument("lname", help = "last name of the student")
+    parser.add_argument("email", help = "email of the student")
+    parser.add_argument("orgname", help = "name of the organization")
+
+    return parser.parse_args(comline)
 
   
 if __name__ == "__main__":
