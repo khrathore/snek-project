@@ -3,6 +3,8 @@
 from argparse import ArgumentParser
 import re
 import sys
+import pandas as pd
+import matplotlib.pyplot as plt
 
 class User:
     """Defines a user object for the person planning the event
@@ -97,7 +99,7 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, location, evbudget,  full_budget, 
+    def __init__(self, location, evbudget, room_bud,
                  food=False, equip=False, music=False, supplies=False):
         """ Initializes the Event Class. - Sandra
         Args:
@@ -119,13 +121,13 @@ class Event:
             This method will showcase the  Optional Parameter that will be used to 
             determine the budgets for the different event budget categories. 
         """
-        self.location=[]
+        self.location=Event.loc_checker(room_bud)
         self.evbudget=Budget("Event",evbudget)
         self.food=food
         self.equip=equip
         self.music=music
         self.supplies=supplies
-        full_budget=[]
+        self.full_budget=[]
             
         
     def loc_checker(self, filepath, room_budget):
@@ -141,6 +143,7 @@ class Event:
         This method will showcase a List Comprehension that gives the location options available 
         based on a given budget.
         """
+        # We need to have this file made and hard-coded unfortunately.
         with open(filepath, "r",encoding= "utf-8") as f:
             for line in f:
                 values= line.split()
@@ -164,18 +167,6 @@ class Event:
             
         """
     
-    def fundraise(self):
-       """
-        Fundraise - f-string - Kabindra #lets DELETE this method based on what the gradescope feedback we got 
-                                        we can add the f-string to the budget_tracker method
-        
-        Side Effects:
-            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
-        """
-        
-        
-        
-     
     def budget_tracker(self, budget):
         """
         Budget tracker - Conditional Expression - Palrika
@@ -197,8 +188,9 @@ class Event:
         Khushboo: pyplot usage, creates a diagram of the budget distribution     
         Side effects: 
             Shows a bar graph of spending
-
         """
+        df = pd.dataframe(self.full_budget)
+        plt.bar(df[0],df[1])
 
 class Budget:
     """Tracks budget objects
@@ -238,8 +230,11 @@ class Budget:
         """
         
         check = self.budget - other.budget
-        if check < 0:
-            raise TypeError 
+        try:
+            if check < 0:
+                raise TypeError 
+        except TypeError:
+            print (f"In order to go forward with this event, you will need to raise ${check*-1}")
         else:
             return check
     
