@@ -36,7 +36,7 @@ class User:
 
 class Event():
     
-    def __init__(self, name, budget, food_budget, equip_budget, supplies_budget, loc_budget):
+    def __init__(self, name, budget, food_budget, equip_budget, supplies_budget, loc_budgetclear):
         self.name = name
         self.budget = budget
         self.name = name
