@@ -53,7 +53,7 @@ class User:
         else:
             raise ValueError("The email you provided is not valid.")
         
-    def org_check(self):
+    def org_check(self, org_file):
         """ Rabindra
         Takes the org name
         with statement to read the file
@@ -65,6 +65,15 @@ class User:
         Returns: 
             Boolean Value
         """
+        org_list = []
+        with open(org_file, 'r') as f:
+            for line in f:
+                org_list.append(line.strip())
+        if self.org in org_list:
+            return True
+        else:
+            raise ValueError(f"{self.org} is not an active Campus Org")
+        
 class Event:
     """ Plans the event for a student organization based on different categories.
     Attributes:
