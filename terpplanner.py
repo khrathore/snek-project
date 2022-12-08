@@ -95,8 +95,7 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, evlength, location, evbudget,  full_budget, 
-                 food=0, equip=0, music=0, supplies=0):
+    def __init__(self, name, budget, food_budget, equip_budget, supplies_budget, loc_budget):
         """ Initializes the Event Class. - Sandra
         Args:
             location(str): The location of the event.
@@ -117,17 +116,15 @@ class Event:
             This method will showcase the  Optional Parameter that will be used to 
             determine the budgets for the different event budget categories. 
         """
-        self.location=[]
-        self.length = evlength
-        self.evbudget=evbudget
-        self.food=food
-        self.equip=equip
-        self.music=music
-        self.supplies=supplies
-        full_budget=[]
+        self.name = name
+        self.budget = budget
+        self.name = name
+        self.food_budget = food_budget
+        self.equi_budget = equip_budget
+        self.supplies_budget = supplies_budget
+        self.loc_budget = loc_budget
             
-        
-    def loc_checker(self, filepath):
+    def loc_checker(self, filepath, room_budget):
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
             filepath(str):A path to a file of locations on campus.
@@ -186,11 +183,9 @@ class Event:
             
         Side effect:
             Creates new budget object
-            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
-
         """
         if budget < 0:
-            
+            self.fundraise()
             
         
     def bud_vis(self):
@@ -198,6 +193,7 @@ class Event:
         Khushboo: pyplot usage, creates a diagram of the budget distribution     
         Side effects: 
             Shows a bar graph of spending
+
         """
 
 class Budget:
