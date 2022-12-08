@@ -124,12 +124,8 @@ class Event:
         self.supplies_budget = supplies_budget
         self.loc_budget = loc_budget
             
-<<<<<<< HEAD
-    def loc_checker(self, filepath, room_budget):
-=======
         
     def loc_checker(self, filepath):
->>>>>>> efee08d40a4ded92d5d1e7d7586c88044f7b93c0
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
             filepath(str):A path to a file of locations on campus.
@@ -167,15 +163,6 @@ class Event:
             
         """
     
-    def fundraise(self):
-       """
-        Fundraise - f-string - Kabindra #lets DELETE this method based on what the gradescope feedback we got 
-                                        we can add the f-string to the budget_tracker method
-        
-        Side Effects:
-            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
-        """
-        
      
     def budget_tracker(self, budget):
         """
@@ -188,9 +175,11 @@ class Event:
             
         Side effect:
             Creates new budget object
+            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
+
         """
         if budget < 0:
-            
+            f"You are overspending your budget. Your group will need to fundraise ${abs(self.budget)}."
             
         
     def bud_vis(self):
