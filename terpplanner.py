@@ -40,7 +40,6 @@ class User:
         """
         Uses a regex expression to check whether the email provided is a umd one.
         
-        
         Raises:
             ValueError If the program does not find a matching email
         """
@@ -140,13 +139,14 @@ class Event:
         This method will showcase a List Comprehension that gives the location options available 
         based on a given budget.
         """
+        best_location = {}
         with open(filepath, "r",encoding= "utf-8") as f:
             best_location={}
             for line in f:
                 values= line.split(",")
                 if float(values[1].strip()) <= self.loc_budget:
                     best_location[values[0]] = float(values[1].strip())
-            return best_location 
+            return best_location
         
     def event_id(self, idset): 
         """ Rabindra
@@ -254,7 +254,7 @@ def main(fname, lname, email, orgname):
         file: A txt file containg the completed event plan with budget details.
     The user will be prompted to fill in the corresponding information for their event to determine the
     budget calculations of the event.
-    In order to achieve this we will impllement a loop
+    In order to achieve this we will implement a loop
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
@@ -272,12 +272,14 @@ def main(fname, lname, email, orgname):
             equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
             supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
             supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
-            
-    event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, loc_budget)
-    print("\nFollowing are the available locations within your location budget:")
-    affordable_loc = event1.loc_checker()
-    for location in affordable_loc:
-        print(f"{location}: ${affordable_loc[location]}")
+            event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, loc_budget)
+            print("\nFollowing are the available locations within your location budget:")
+            affordable_loc = event1.loc_checker()
+            for location in affordable_loc:
+                print(f"{location}: ${affordable_loc[location]}")
+        else:
+            print("Thank you for creating a profile with TerpPlanner.")
+    
 
     
 
@@ -289,7 +291,13 @@ def parse_args(comline):
         comline(str) : arguments users input in the command line
     # Shows the class and sequence unpacking
     """
-    return
+    parser = ArgumentParser()
+    parser.add_argument("fname", help="first name of the student")
+    parser.add_argument("lname", help = "last name of the student")
+    parser.add_argument("email", help = "email of the student")
+    parser.add_argument("orgname", help = "name of the organization")
+
+    return parser.parse_args(comline)
 
   
 if __name__ == "__main__":
