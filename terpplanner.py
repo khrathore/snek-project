@@ -126,12 +126,8 @@ class Event:
         self.supplies=supplies
         full_budget=[]
             
-<<<<<<< HEAD
-    def loc_checker(self, filepath, room_budget):
-=======
         
     def loc_checker(self, filepath):
->>>>>>> efee08d40a4ded92d5d1e7d7586c88044f7b93c0
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
             filepath(str):A path to a file of locations on campus.
@@ -202,7 +198,6 @@ class Event:
         Khushboo: pyplot usage, creates a diagram of the budget distribution     
         Side effects: 
             Shows a bar graph of spending
-
         """
 
 class Budget:
