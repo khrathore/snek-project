@@ -126,7 +126,7 @@ class Event:
         full_budget=[]
             
         
-    def loc_checker(self, filepath, room_budget):
+    def loc_checker(self, filepath):
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
             filepath(str):A path to a file of locations on campus.
