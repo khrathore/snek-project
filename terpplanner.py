@@ -52,7 +52,7 @@ class User:
         else:
             raise ValueError("The email you provided is not valid.")
         
-    def org_check(self):
+    def org_check(self, org_file="Organizations.txt"):
         """ Rabindra
         Takes the org name
         with statement to read the file
@@ -64,6 +64,15 @@ class User:
         Returns: 
             Boolean Value
         """
+        org_list = []
+        with open(org_file, 'r') as f:
+            for line in f:
+                org_list.append(line.strip())
+        if self.org in org_list:
+            return True
+        else:
+            raise ValueError(f"{self.org} is not an active Campus Org")
+        
 class Event:
     """ Plans the event for a student organization based on different categories.
     Attributes:
@@ -243,47 +252,32 @@ def main(fname, lname, email, orgname):
         file: A txt file containg the completed event plan with budget details.
     The user will be prompted to fill in the corresponding information for their event to determine the
     budget calculations of the event.
-    In order to achieve this we will impllement a loop
+    In order to achieve this we will implement a loop
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
-    welcom_msg=f"Welcome to Terp Planner {fname} {lname}!"
-    # need to implement the email and org check
-    begin=input("Do you want to plan an event? (yes/no)")
-    while begin == begin.lower("yes"):
-        name=input("Please provide the name of the event: ")
-        event=Event()
-        budget=float(input("Please provide the budget for your event: "))
-        if event.evbudget(budget) == True:
-            event.budget_tracker() 
-        
-        #else:
-            #print("Please provide your budget to move forward.")
-            
-        p2=input("Does your event have a food budget? (yes/no): ")
-        if p2== p2.lower("yes"):
-            if event.food(p2)==True:
-                food_bud=float(input("Please provide the budget for food: "))
-                if event.food(food_bud)==True:
-                    
-        
-        p3=input("Do you want to have an equipment budget?(yes/no)")
-        if p3==p3.lower("yes"):
-            if event.equip(p3) == True:
-                equip_bud=float(input("Please provide the budget for equipment: "))
-        p4= input("Do you want to have a music budget? (yes/no)")
-        if p4==p4.lower("yes"):
-            if event.music == True:
-                music_bud=float(input("Please provide the budget for music: "))
-                
-        p5= input("Do you want to have a supplies budget? (yes/no)")
-        if p5==p5.lower("yes"):
-            if event.supplies== True:
-                supp_bud=float(input("Please provide the budget for supplies: "))
+    user = User(fname, lname, email, orgname)
+    if user.email_check() == True & user.org_check() == True:
+        begin = input("\nDo you want to plan an event? (yes/no): ")
+        if begin.lower() == "yes":
+            name = input("\nPlease provide the name of the event: ")
+            evl = input("\nHow long will you event be: ")
+            budget = float(input("Please provide the budget for your event: "))
+            loc_budget = float(input("How much do you want to spend on the location? "))
+            food = True if input("Do you want food in your event? ").lower() == "yes" else False
+            food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
+            equip = True if input("Do you need equipments for your event? ").lower() == "yes" else False
+            equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
+            supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
+            supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
+            event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, loc_budget)
+            print("\nFollowing are the available locations within your location budget:")
+            affordable_loc = event1.loc_checker()
+            for location in affordable_loc:
+                print(f"{location}: ${affordable_loc[location]}")
+        else:
+            print("Thank you for creating a profile with TerpPlanner.")
     
-    f = open('event_plan', 'w', encoding='utf-8')
-    f.write()
-    f.close()
 
     
 
@@ -295,7 +289,13 @@ def parse_args(comline):
         comline(str) : arguments users input in the command line
     # Shows the class and sequence unpacking
     """
-    return
+    parser = ArgumentParser()
+    parser.add_argument("fname", help="first name of the student")
+    parser.add_argument("lname", help = "last name of the student")
+    parser.add_argument("email", help = "email of the student")
+    parser.add_argument("orgname", help = "name of the organization")
+
+    return parser.parse_args(comline)
 
   
 if __name__ == "__main__":
