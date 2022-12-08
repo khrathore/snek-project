@@ -126,7 +126,12 @@ class Event:
         self.supplies=supplies
         full_budget=[]
             
+<<<<<<< HEAD
     def loc_checker(self, filepath, room_budget):
+=======
+        
+    def loc_checker(self, filepath):
+>>>>>>> efee08d40a4ded92d5d1e7d7586c88044f7b93c0
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
             filepath(str):A path to a file of locations on campus.
@@ -141,6 +146,7 @@ class Event:
         """
         best_location = {}
         with open(filepath, "r",encoding= "utf-8") as f:
+            best_location={}
             for line in f:
                 values= line.split(",")
                 if float(values[1].strip()) <= self.loc_budget:
