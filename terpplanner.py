@@ -99,8 +99,8 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, location, evbudget, room_bud,
-                 food=False, equip=False, music=False, supplies=False):
+    def __init__(self, evlength, location, evbudget, room_bud,
+                 foodbudget, equipbudget, musicbudget, suppliesbudget):
         """ Initializes the Event Class. - Sandra
         Args:
             location(str): The location of the event.
@@ -121,12 +121,13 @@ class Event:
             This method will showcase the  Optional Parameter that will be used to 
             determine the budgets for the different event budget categories. 
         """
+        self.length = evlength
         self.location=Event.loc_checker(room_bud)
         self.evbudget=Budget("Event",evbudget)
-        self.food=food
-        self.equip=equip
-        self.music=music
-        self.supplies=supplies
+        self.food=Budget("Food",foodbudget)
+        self.equip=Budget("Equipment", equipbudget)
+        self.music=Budget("Music", musicbudget)
+        self.supplies=Budget("Supplies", suppliesbudget)
         self.full_budget=[]
             
         
@@ -144,12 +145,13 @@ class Event:
         based on a given budget.
         """
         # We need to have this file made and hard-coded unfortunately.
+        best_location = {}
         with open(filepath, "r",encoding= "utf-8") as f:
             for line in f:
-                values= line.split()
-                self.location.append({"location":values[0], "rent":float(values[1])})
-            best_avail=[l for l in self.location if l["rent"]==room_budget] 
-            return best_avail[0:] 
+                values= line.split(",")
+                if float(values[1].strip()) <= self.loc_budget:
+                    best_location[values[0]] = float(values[1].strip())
+            return best_location 
         
     def event_id(self, idset): 
         """ Rabindra
