@@ -3,8 +3,6 @@
 from argparse import ArgumentParser
 import re
 import sys
-import pandas as pd
-import matplotlib.pyplot as plt
 
 class User:
     """Defines a user object for the person planning the event
@@ -42,7 +40,6 @@ class User:
         """
         Uses a regex expression to check whether the email provided is a umd one.
         
-        
         Raises:
             ValueError If the program does not find a matching email
         """
@@ -55,14 +52,14 @@ class User:
         else:
             raise ValueError("The email you provided is not valid.")
         
-    def org_check(self, org_file):
+    def org_check(self, org_file="Organizations.txt"):
         """ Rabindra
         Takes the org name
         with statement to read the file
         compares to make sure it's an active campus org, otherwises errors
         
         Args:
-            org_file(str): file with a list of all active campus org
+            org_name(str): Name of organization
         
         Returns: 
             Boolean Value
@@ -71,11 +68,10 @@ class User:
         with open(org_file, 'r') as f:
             for line in f:
                 org_list.append(line.strip())
-        
         if self.org in org_list:
             return True
         else:
-            return False
+            raise ValueError(f"{self.org} is not an active Campus Org")
         
 class Event:
     """ Plans the event for a student organization based on different categories.
@@ -99,8 +95,7 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, location, evbudget, room_bud,
-                 food=False, equip=False, music=False, supplies=False):
+    def __init__(self, name, budget, food_budget, equip_budget, supplies_budget, loc_budget):
         """ Initializes the Event Class. - Sandra
         Args:
             location(str): The location of the event.
@@ -121,16 +116,16 @@ class Event:
             This method will showcase the  Optional Parameter that will be used to 
             determine the budgets for the different event budget categories. 
         """
-        self.location=Event.loc_checker(room_bud)
-        self.evbudget=Budget("Event",evbudget)
-        self.food=food
-        self.equip=equip
-        self.music=music
-        self.supplies=supplies
-        self.full_budget=[]
+        self.name = name
+        self.budget = budget
+        self.name = name
+        self.food_budget = food_budget
+        self.equi_budget = equip_budget
+        self.supplies_budget = supplies_budget
+        self.loc_budget = loc_budget
             
         
-    def loc_checker(self, filepath, room_budget):
+    def loc_checker(self, filepath):
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
             filepath(str):A path to a file of locations on campus.
@@ -143,13 +138,14 @@ class Event:
         This method will showcase a List Comprehension that gives the location options available 
         based on a given budget.
         """
-        # We need to have this file made and hard-coded unfortunately.
+        best_location = {}
         with open(filepath, "r",encoding= "utf-8") as f:
+            best_location={}
             for line in f:
-                values= line.split()
-                self.location.append({"location":values[0], "rent":float(values[1])})
-            best_avail=[l for l in self.location if l["rent"]==room_budget] 
-            return best_avail[0:] 
+                values= line.split(",")
+                if float(values[1].strip()) <= self.loc_budget:
+                    best_location[values[0]] = float(values[1].strip())
+            return best_location
         
     def event_id(self, idset): 
         """ Rabindra
@@ -167,6 +163,7 @@ class Event:
             
         """
     
+     
     def budget_tracker(self, budget):
         """
         Budget tracker - Conditional Expression - Palrika
@@ -178,9 +175,11 @@ class Event:
             
         Side effect:
             Creates new budget object
+            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
+
         """
         if budget < 0:
-            self.fundraise()
+            f"You are overspending your budget. Your group will need to fundraise ${abs(self.budget)}."
             
         
     def bud_vis(self):
@@ -188,9 +187,8 @@ class Event:
         Khushboo: pyplot usage, creates a diagram of the budget distribution     
         Side effects: 
             Shows a bar graph of spending
+
         """
-        df = pd.dataframe(self.full_budget)
-        plt.bar(df[0],df[1])
 
 class Budget:
     """Tracks budget objects
@@ -230,13 +228,10 @@ class Budget:
         """
         
         check = self.budget - other.budget
-        try:
-            if check < 0:
-                raise TypeError 
-        except TypeError:
-            print (f"In order to go forward with this event, you will need to raise ${check*-1}")
+        if check < 0:
+            raise TypeError 
         else:
-            return check
+            return f"${check} of your budget is left to spend."
     
 
 def main(fname, lname, email, orgname):
@@ -251,60 +246,32 @@ def main(fname, lname, email, orgname):
         file: A txt file containg the completed event plan with budget details.
     The user will be prompted to fill in the corresponding information for their event to determine the
     budget calculations of the event.
-    In order to achieve this we will impllement a loop
+    In order to achieve this we will implement a loop
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
-    welcom_msg=f"Welcome to Terp Planner {fname} {lname}!"
-    user=User()
-    if user.email_check(email)==True and user.org_check(orgname)==True:
-        begin=input("Do you want to plan an event? (yes/no)")
-        if begin == begin.lower("yes"):
-            name=input("Please provide the name of the event: ")
-            event=Event()
-            budget=float(input("Please provide the budget for your event: "))
-            if event.evbudget(budget) == True:
-                event.budget_tracker()
-            p1=float(input("Provide your budget for location: "))
-            if event.location(p1)==True:
-                s0=event.loc_checker()
-            p2=input("Does your event have a food budget? (yes/no): ")
-            if p2== p2.lower("yes"):
-                if event.food(p2)==True:
-                    food_bud=float(input("Please provide the budget for food: "))
-                    s1=event.budget_tracker()-event.food(food_bud)
-            p3=input("Do you want to have an equipment budget?(yes/no)")
-            if p3==p3.lower("yes"):
-                if event.equip(p3) == True:
-                    equip_bud=float(input("Please provide the budget for equipment: "))
-                    s2=event.budget_tracker()-event.equip(equip_bud)
-            p4= input("Do you want to have a music budget? (yes/no)")
-            if p4==p4.lower("yes"):
-                if event.music == True:
-                    music_bud=float(input("Please provide the budget for music: "))
-                    s3=event.budget_tracker()-event.music(music_bud)
-            p5= input("Do you want to have a supplies budget? (yes/no)")
-            if p5==p5.lower("yes"):
-                if event.supplies== True:
-                    supp_bud=float(input("Please provide the budget for supplies: "))
-                    s4=event.budget_tracker()-event.supplies(supp_bud)
-                    
-
-        
-            
-            
-                       
-
-        
-        #else:
-            #print("Please provide your budget to move forward.")
-            
-                
-                
+    user = User(fname, lname, email, orgname)
+    if user.email_check() == True & user.org_check() == True:
+        begin = input("\nDo you want to plan an event? (yes/no): ")
+        if begin.lower() == "yes":
+            name = input("\nPlease provide the name of the event: ")
+            evl = input("\nHow long will you event be: ")
+            budget = float(input("Please provide the budget for your event: "))
+            loc_budget = float(input("How much do you want to spend on the location? "))
+            food = True if input("Do you want food in your event? ").lower() == "yes" else False
+            food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
+            equip = True if input("Do you need equipments for your event? ").lower() == "yes" else False
+            equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
+            supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
+            supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
+            event1 = Event(name, evl, budget, food_budget, equip_budget, supplies_budget, loc_budget)
+            print("\nFollowing are the available locations within your location budget:")
+            affordable_loc = event1.loc_checker()
+            for location in affordable_loc:
+                print(f"{location}: ${affordable_loc[location]}")
+        else:
+            print("Thank you for creating a profile with TerpPlanner.")
     
-    f = open('event_plan', 'w', encoding='utf-8')
-    f.write()
-    f.close()
 
     
 
