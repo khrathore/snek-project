@@ -53,7 +53,7 @@ class User:
         else:
             raise ValueError("The email you provided is not valid.")
         
-    def org_check(self, org_file):
+    def org_check(self, org_file="Organizations.txt"):
         """ Rabindra
         Takes the org name
         with statement to read the file
