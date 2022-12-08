@@ -1,0 +1,50 @@
+welcom_msg=f"Welcome to Terp Planner {fname} {lname}!"
+    user=User()
+    if user.email_check(email)==True and user.org_check(orgname)==True:
+        begin=input("Do you want to plan an event? (yes/no)")
+        if begin == begin.lower("yes"):
+            name=input("Please provide the name of the event: ")
+            event=Event()
+            budget=float(input("Please provide the budget for your event: "))
+            if event.evbudget(budget) == True:
+                event.budget_tracker()
+            p1=float(input("Provide your budget for location: "))
+            if event.location(p1)==True:
+                s0=event.loc_checker()
+            p2=input("Does your event have a food budget? (yes/no): ")
+            if p2== p2.lower("yes"):
+                if event.food(p2)==True:
+                    food_bud=float(input("Please provide the budget for food: "))
+                    s1=event.budget_tracker()-event.food(food_bud)
+            p3=input("Do you want to have an equipment budget?(yes/no)")
+            if p3==p3.lower("yes"):
+                if event.equip(p3) == True:
+                    equip_bud=float(input("Please provide the budget for equipment: "))
+                    s2=event.budget_tracker()-event.equip(equip_bud)
+            p4= input("Do you want to have a music budget? (yes/no)")
+            if p4==p4.lower("yes"):
+                if event.music == True:
+                    music_bud=float(input("Please provide the budget for music: "))
+                    s3=event.budget_tracker()-event.music(music_bud)
+            p5= input("Do you want to have a supplies budget? (yes/no)")
+            if p5==p5.lower("yes"):
+                if event.supplies== True:
+                    supp_bud=float(input("Please provide the budget for supplies: "))
+                    s4=event.budget_tracker()-event.supplies(supp_bud)
+                    
+
+        
+            
+            
+                       
+
+        
+        #else:
+            #print("Please provide your budget to move forward.")
+            
+                
+                
+    
+    f = open('event_plan', 'w', encoding='utf-8')
+    f.write()
+    f.close()

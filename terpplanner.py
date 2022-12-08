@@ -257,56 +257,31 @@ def main(fname, lname, email, orgname):
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
-    welcom_msg=f"Welcome to Terp Planner {fname} {lname}!"
-    user=User()
-    if user.email_check(email)==True and user.org_check(orgname)==True:
-        begin=input("Do you want to plan an event? (yes/no)")
-        if begin == begin.lower("yes"):
-            name=input("Please provide the name of the event: ")
-            event=Event()
-            budget=float(input("Please provide the budget for your event: "))
-            if event.evbudget(budget) == True:
-                event.budget_tracker()
-            p1=float(input("Provide your budget for location: "))
-            if event.location(p1)==True:
-                s0=event.loc_checker()
-            p2=input("Does your event have a food budget? (yes/no): ")
-            if p2== p2.lower("yes"):
-                if event.food(p2)==True:
-                    food_bud=float(input("Please provide the budget for food: "))
-                    s1=event.budget_tracker()-event.food(food_bud)
-            p3=input("Do you want to have an equipment budget?(yes/no)")
-            if p3==p3.lower("yes"):
-                if event.equip(p3) == True:
-                    equip_bud=float(input("Please provide the budget for equipment: "))
-                    s2=event.budget_tracker()-event.equip(equip_bud)
-            p4= input("Do you want to have a music budget? (yes/no)")
-            if p4==p4.lower("yes"):
-                if event.music == True:
-                    music_bud=float(input("Please provide the budget for music: "))
-                    s3=event.budget_tracker()-event.music(music_bud)
-            p5= input("Do you want to have a supplies budget? (yes/no)")
-            if p5==p5.lower("yes"):
-                if event.supplies== True:
-                    supp_bud=float(input("Please provide the budget for supplies: "))
-                    s4=event.budget_tracker()-event.supplies(supp_bud)
-                    
-
-        
-            
-            
-                       
-
-        
-        #else:
-            #print("Please provide your budget to move forward.")
-            
-                
-                
+    print(f"Welcome to Terp Planner {fname} {lname}!")
     
-    f = open('event_plan', 'w', encoding='utf-8')
-    f.write()
-    f.close()
+    user = User(fname, lname, email, orgname)
+    
+    if user.email_check() == True & user.org_check() == True:
+        begin = input("\nDo you want to plan an event? (yes/no): ")
+        if begin.lower() == "yes":
+            name = input("\nPlease provide the name of the event: ")
+            budget = float(input("Please provide the budget for your event: "))
+            
+            loc_budget = float(input("How much do you want to spend on the location? "))
+            
+            
+            food = True if input("Do you want food in your event? ").lower() == "yes" else False
+            food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
+            equip = True if input("Do you need equipments for your event? ").lower() == "yes" else False
+            equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
+            supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
+            supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
+            
+    event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, loc_budget)
+    print("\nFollowing are the available locations within your location budget:")
+    affordable_loc = event1.loc_checker()
+    for location in affordable_loc:
+        print(f"{location}: ${affordable_loc[location]}")
 
     
 
