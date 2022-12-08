@@ -126,12 +126,7 @@ class Event:
         self.supplies=supplies
         full_budget=[]
             
-<<<<<<< HEAD
     def loc_checker(self, filepath, room_budget):
-=======
-        
-    def loc_checker(self, filepath):
->>>>>>> efee08d40a4ded92d5d1e7d7586c88044f7b93c0
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
             filepath(str):A path to a file of locations on campus.
@@ -193,7 +188,8 @@ class Event:
             If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
 
         """
-        if budget < 0:
+        if self.budget < 0:
+            f"You are overspending your bugdet. You will need to fundraise {abs(self.budget)}.x"
             
             
         
