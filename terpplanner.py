@@ -141,6 +141,7 @@ class Event:
         based on a given budget.
         """
         with open(filepath, "r",encoding= "utf-8") as f:
+            best_location={}
             for line in f:
                 values= line.split(",")
                 if float(values[1].strip()) <= self.loc_budget:
