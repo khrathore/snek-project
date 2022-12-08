@@ -249,16 +249,13 @@ def main(fname, lname, email, orgname):
     Do you want to plan another event? if yes, restart loop
     """
     user = User(fname, lname, email, orgname)
-    
     if user.email_check() == True & user.org_check() == True:
         begin = input("\nDo you want to plan an event? (yes/no): ")
         if begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
+            evl = input("\nHow long will you event be: ")
             budget = float(input("Please provide the budget for your event: "))
-            
             loc_budget = float(input("How much do you want to spend on the location? "))
-            
-            
             food = True if input("Do you want food in your event? ").lower() == "yes" else False
             food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
             equip = True if input("Do you need equipments for your event? ").lower() == "yes" else False
