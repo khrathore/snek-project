@@ -185,9 +185,11 @@ class Event:
             
         Side effect:
             Creates new budget object
+            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
+
         """
         if budget < 0:
-            self.fundraise()
+            
             
         
     def bud_vis(self):
