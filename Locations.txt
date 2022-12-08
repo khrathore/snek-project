@@ -1,0 +1,23 @@
+Stamp Grand Ballroom, 86.00
+Stamp Colony Ballroom, 52.00
+Stamp Atrium Room, 21.00
+Stamp Charles Carroll Room, 17.00
+Stamp Charles Carroll A Room, 8.00
+Stamp Charles Carroll B Room, 8.00
+Stamp Grand Ballroom Lounge Room, 17.00
+Stamp Prince George's Room Room, 17.00
+Stamp Calvert Room, 10.00
+Stamp Crossland Room, 10.00
+Stamp Benjamin Banneker Room, 14.00
+Stamp Benjamin Banneker A Room, 8.00
+Stamp Benjamin Banneker B Room, 8.00
+Stamp Margaret Brent Room, 13.00
+Stamp Margaret Brent A Room, 7.00
+Stamp Margaret Brent B Room, 7.00
+Stamp Juan Ramon Jimenez Room, 13.00
+Stamp Nanticoke Room, 7.00
+Stamp Pyon Su Room, 7.00
+Stamp Thurgood Marshall Room, 7.00
+Stamp Edgar Allen Poe Room, 4.00
+Stamp Harriet Tubman Room, 3.00
+Stamp Hoff Theater, 41.00

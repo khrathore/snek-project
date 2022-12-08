@@ -3,6 +3,8 @@
 from argparse import ArgumentParser
 import re
 import sys
+import pandas as pd
+import matplotlib.pyplot as plt
 
 class User:
     """Defines a user object for the person planning the event
@@ -53,18 +55,28 @@ class User:
         else:
             raise ValueError("The email you provided is not valid.")
         
-    def org_check(self):
+    def org_check(self, org_file):
         """ Rabindra
         Takes the org name
         with statement to read the file
         compares to make sure it's an active campus org, otherwises errors
         
         Args:
-            org_name(str): Name of organization
+            org_file(str): file with a list of all active campus org
         
         Returns: 
             Boolean Value
         """
+        org_list = []
+        with open(org_file, 'r') as f:
+            for line in f:
+                org_list.append(line.strip())
+        
+        if self.org in org_list:
+            return True
+        else:
+            return False
+        
 class Event:
     """ Plans the event for a student organization based on different categories.
     Attributes:
@@ -87,7 +99,7 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, location, evbudget,  full_budget, 
+    def __init__(self, location, evbudget, room_bud,
                  food=False, equip=False, music=False, supplies=False):
         """ Initializes the Event Class. - Sandra
         Args:
@@ -109,13 +121,13 @@ class Event:
             This method will showcase the  Optional Parameter that will be used to 
             determine the budgets for the different event budget categories. 
         """
-        self.location=[]
-        self.evbudget=evbudget
+        self.location=Event.loc_checker(room_bud)
+        self.evbudget=Budget("Event",evbudget)
         self.food=food
         self.equip=equip
         self.music=music
         self.supplies=supplies
-        full_budget=[]
+        self.full_budget=[]
             
         
     def loc_checker(self, filepath, room_budget):
@@ -131,6 +143,7 @@ class Event:
         This method will showcase a List Comprehension that gives the location options available 
         based on a given budget.
         """
+        # We need to have this file made and hard-coded unfortunately.
         with open(filepath, "r",encoding= "utf-8") as f:
             for line in f:
                 values= line.split()
@@ -154,16 +167,6 @@ class Event:
             
         """
     
-    def fundraise(self):
-       """
-        Fundraise - f-string - Kabindra #lets DELETE this method based on what the gradescope feedback we got 
-                                        we can add the f-string to the budget_tracker method
-        
-        Side Effects:
-            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
-        """
-        
-     
     def budget_tracker(self, budget):
         """
         Budget tracker - Conditional Expression - Palrika
@@ -185,8 +188,9 @@ class Event:
         Khushboo: pyplot usage, creates a diagram of the budget distribution     
         Side effects: 
             Shows a bar graph of spending
-
         """
+        df = pd.dataframe(self.full_budget)
+        plt.bar(df[0],df[1])
 
 class Budget:
     """Tracks budget objects
@@ -226,10 +230,18 @@ class Budget:
         """
         
         check = self.budget - other.budget
+<<<<<<< HEAD
         if check < 0:
-            raise TypeError 
+            raise ValueError("Wait, you are overspending!")
+=======
+        try:
+            if check < 0:
+                raise TypeError 
+        except TypeError:
+            print (f"In order to go forward with this event, you will need to raise ${check*-1}")
+>>>>>>> ce44d7f4d02772531b599a5914a0b0b3ab54ef54
         else:
-            return check
+            return f"${check} of your budget is left to spend."
     
 
 def main(fname, lname, email, orgname):
@@ -249,38 +261,51 @@ def main(fname, lname, email, orgname):
     Do you want to plan another event? if yes, restart loop
     """
     welcom_msg=f"Welcome to Terp Planner {fname} {lname}!"
-    # need to implement the email and org check
-    begin=input("Do you want to plan an event? (yes/no)")
-    while begin == begin.lower("yes"):
-        name=input("Please provide the name of the event: ")
-        event=Event()
-        budget=float(input("Please provide the budget for your event: "))
-        if event.evbudget(budget) == True:
-            event.budget_tracker() 
+    user=User()
+    if user.email_check(email)==True and user.org_check(orgname)==True:
+        begin=input("Do you want to plan an event? (yes/no)")
+        if begin == begin.lower("yes"):
+            name=input("Please provide the name of the event: ")
+            event=Event()
+            budget=float(input("Please provide the budget for your event: "))
+            if event.evbudget(budget) == True:
+                event.budget_tracker()
+            p1=float(input("Provide your budget for location: "))
+            if event.location(p1)==True:
+                s0=event.loc_checker()
+            p2=input("Does your event have a food budget? (yes/no): ")
+            if p2== p2.lower("yes"):
+                if event.food(p2)==True:
+                    food_bud=float(input("Please provide the budget for food: "))
+                    s1=event.budget_tracker()-event.food(food_bud)
+            p3=input("Do you want to have an equipment budget?(yes/no)")
+            if p3==p3.lower("yes"):
+                if event.equip(p3) == True:
+                    equip_bud=float(input("Please provide the budget for equipment: "))
+                    s2=event.budget_tracker()-event.equip(equip_bud)
+            p4= input("Do you want to have a music budget? (yes/no)")
+            if p4==p4.lower("yes"):
+                if event.music == True:
+                    music_bud=float(input("Please provide the budget for music: "))
+                    s3=event.budget_tracker()-event.music(music_bud)
+            p5= input("Do you want to have a supplies budget? (yes/no)")
+            if p5==p5.lower("yes"):
+                if event.supplies== True:
+                    supp_bud=float(input("Please provide the budget for supplies: "))
+                    s4=event.budget_tracker()-event.supplies(supp_bud)
+                    
+
+        
+            
+            
+                       
+
         
         #else:
             #print("Please provide your budget to move forward.")
             
-        p2=input("Does your event have a food budget? (yes/no): ")
-        if p2== p2.lower("yes"):
-            if event.food(p2)==True:
-                food_bud=float(input("Please provide the budget for food: "))
-                if event.food(food_bud)==True:
-                    
-        
-        p3=input("Do you want to have an equipment budget?(yes/no)")
-        if p3==p3.lower("yes"):
-            if event.equip(p3) == True:
-                equip_bud=float(input("Please provide the budget for equipment: "))
-        p4= input("Do you want to have a music budget? (yes/no)")
-        if p4==p4.lower("yes"):
-            if event.music == True:
-                music_bud=float(input("Please provide the budget for music: "))
                 
-        p5= input("Do you want to have a supplies budget? (yes/no)")
-        if p5==p5.lower("yes"):
-            if event.supplies== True:
-                supp_bud=float(input("Please provide the budget for supplies: "))
+                
     
     f = open('event_plan', 'w', encoding='utf-8')
     f.write()
@@ -296,7 +321,13 @@ def parse_args(comline):
         comline(str) : arguments users input in the command line
     # Shows the class and sequence unpacking
     """
-    return
+    parser = ArgumentParser()
+    parser.add_argument("fname", help="first name of the student")
+    parser.add_argument("lname", help = "last name of the student")
+    parser.add_argument("email", help = "email of the student")
+    parser.add_argument("orgname", help = "name of the organization")
+
+    return parser.parse_args(comline)
 
   
 if __name__ == "__main__":
