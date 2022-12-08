@@ -3,8 +3,6 @@
 from argparse import ArgumentParser
 import re
 import sys
-import pandas as pd
-import matplotlib.pyplot as plt
 
 class User:
     """Defines a user object for the person planning the event
@@ -55,28 +53,18 @@ class User:
         else:
             raise ValueError("The email you provided is not valid.")
         
-    def org_check(self, org_file):
+    def org_check(self):
         """ Rabindra
         Takes the org name
         with statement to read the file
         compares to make sure it's an active campus org, otherwises errors
         
         Args:
-            org_file(str): file with a list of all active campus org
+            org_name(str): Name of organization
         
         Returns: 
             Boolean Value
         """
-        org_list = []
-        with open(org_file, 'r') as f:
-            for line in f:
-                org_list.append(line.strip())
-        
-        if self.org in org_list:
-            return True
-        else:
-            return False
-        
 class Event:
     """ Plans the event for a student organization based on different categories.
     Attributes:
@@ -99,8 +87,8 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, evlength, location, evbudget, room_bud,
-                 foodbudget, equipbudget, musicbudget, suppliesbudget):
+    def __init__(self, location, evbudget,  full_budget, 
+                 food=False, equip=False, music=False, supplies=False):
         """ Initializes the Event Class. - Sandra
         Args:
             location(str): The location of the event.
@@ -121,14 +109,13 @@ class Event:
             This method will showcase the  Optional Parameter that will be used to 
             determine the budgets for the different event budget categories. 
         """
-        self.length = evlength
-        self.location=Event.loc_checker(room_bud)
-        self.evbudget=Budget("Event",evbudget)
-        self.food=Budget("Food",foodbudget)
-        self.equip=Budget("Equipment", equipbudget)
-        self.music=Budget("Music", musicbudget)
-        self.supplies=Budget("Supplies", suppliesbudget)
-        self.full_budget=[]
+        self.location=[]
+        self.evbudget=evbudget
+        self.food=food
+        self.equip=equip
+        self.music=music
+        self.supplies=supplies
+        full_budget=[]
             
         
     def loc_checker(self, filepath, room_budget):
@@ -144,8 +131,6 @@ class Event:
         This method will showcase a List Comprehension that gives the location options available 
         based on a given budget.
         """
-        # We need to have this file made and hard-coded unfortunately.
-        best_location = {}
         with open(filepath, "r",encoding= "utf-8") as f:
             for line in f:
                 values= line.split(",")
@@ -169,6 +154,16 @@ class Event:
             
         """
     
+    def fundraise(self):
+       """
+        Fundraise - f-string - Kabindra #lets DELETE this method based on what the gradescope feedback we got 
+                                        we can add the f-string to the budget_tracker method
+        
+        Side Effects:
+            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
+        """
+        
+     
     def budget_tracker(self, budget):
         """
         Budget tracker - Conditional Expression - Palrika
@@ -190,9 +185,8 @@ class Event:
         Khushboo: pyplot usage, creates a diagram of the budget distribution     
         Side effects: 
             Shows a bar graph of spending
+
         """
-        df = pd.dataframe(self.full_budget)
-        plt.bar(df[0],df[1])
 
 class Budget:
     """Tracks budget objects
@@ -232,13 +226,10 @@ class Budget:
         """
         
         check = self.budget - other.budget
-        try:
-            if check < 0:
-                raise TypeError 
-        except TypeError:
-            print (f"In order to go forward with this event, you will need to raise ${check*-1}")
+        if check < 0:
+            raise TypeError 
         else:
-            return check
+            return f"${check} of your budget is left to spend."
     
 
 def main(fname, lname, email, orgname):
@@ -257,8 +248,6 @@ def main(fname, lname, email, orgname):
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
-    print(f"Welcome to Terp Planner {fname} {lname}!")
-    
     user = User(fname, lname, email, orgname)
     
     if user.email_check() == True & user.org_check() == True:
@@ -293,13 +282,7 @@ def parse_args(comline):
         comline(str) : arguments users input in the command line
     # Shows the class and sequence unpacking
     """
-    parser = ArgumentParser()
-    parser.add_argument("fname", help="first name of the student")
-    parser.add_argument("lname", help = "last name of the student")
-    parser.add_argument("email", help = "email of the student")
-    parser.add_argument("orgname", help = "name of the organization")
-
-    return parser.parse_args(comline)
+    return
 
   
 if __name__ == "__main__":
