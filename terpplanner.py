@@ -262,12 +262,14 @@ def main(fname, lname, email, orgname):
             equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
             supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
             supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
-            
-    event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, loc_budget)
-    print("\nFollowing are the available locations within your location budget:")
-    affordable_loc = event1.loc_checker()
-    for location in affordable_loc:
-        print(f"{location}: ${affordable_loc[location]}")
+            event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, loc_budget)
+            print("\nFollowing are the available locations within your location budget:")
+            affordable_loc = event1.loc_checker()
+            for location in affordable_loc:
+                print(f"{location}: ${affordable_loc[location]}")
+        else:
+            print("Thank you for creating a profile with TerpPlanner.")
+    
 
     
 
