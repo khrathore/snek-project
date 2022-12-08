@@ -253,7 +253,7 @@ def main(fname, lname, email, orgname):
         file: A txt file containg the completed event plan with budget details.
     The user will be prompted to fill in the corresponding information for their event to determine the
     budget calculations of the event.
-    In order to achieve this we will impllement a loop
+    In order to achieve this we will implement a loop
     Once the user is  done the program will write to a doc the info of the event (including budget)
     Do you want to plan another event? if yes, restart loop
     """
@@ -290,7 +290,13 @@ def parse_args(comline):
         comline(str) : arguments users input in the command line
     # Shows the class and sequence unpacking
     """
-    return
+    parser = ArgumentParser()
+    parser.add_argument("fname", help="first name of the student")
+    parser.add_argument("lname", help = "last name of the student")
+    parser.add_argument("email", help = "email of the student")
+    parser.add_argument("orgname", help = "name of the organization")
+
+    return parser.parse_args(comline)
 
   
 if __name__ == "__main__":
