@@ -140,12 +140,13 @@ class Event:
         This method will showcase a List Comprehension that gives the location options available 
         based on a given budget.
         """
+        best_location = {}
         with open(filepath, "r",encoding= "utf-8") as f:
             for line in f:
                 values= line.split(",")
                 if float(values[1].strip()) <= self.loc_budget:
                     best_location[values[0]] = float(values[1].strip())
-            return best_location 
+            return best_location
         
     def event_id(self, idset): 
         """ Rabindra
