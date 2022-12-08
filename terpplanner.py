@@ -95,8 +95,8 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, location, evbudget,  full_budget, 
-                 food=False, equip=False, music=False, supplies=False):
+    def __init__(self, evlength, location, evbudget,  full_budget, 
+                 food=0, equip=0, music=0, supplies=0):
         """ Initializes the Event Class. - Sandra
         Args:
             location(str): The location of the event.
@@ -118,6 +118,7 @@ class Event:
             determine the budgets for the different event budget categories. 
         """
         self.location=[]
+        self.length = evlength
         self.evbudget=evbudget
         self.food=food
         self.equip=equip
@@ -125,7 +126,6 @@ class Event:
         self.supplies=supplies
         full_budget=[]
             
-        
     def loc_checker(self, filepath, room_budget):
         """Determines the best location to hold an event based on a given budget. - Sandra
         Args: 
@@ -271,7 +271,7 @@ def main(fname, lname, email, orgname):
             equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
             supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
             supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
-            event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, loc_budget)
+            event1 = Event(name, evl, budget, food_budget, equip_budget, supplies_budget, loc_budget)
             print("\nFollowing are the available locations within your location budget:")
             affordable_loc = event1.loc_checker()
             for location in affordable_loc:
