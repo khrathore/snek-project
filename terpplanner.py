@@ -40,7 +40,6 @@ class User:
         """
         Uses a regex expression to check whether the email provided is a umd one.
         
-        
         Raises:
             ValueError If the program does not find a matching email
         """
