@@ -192,6 +192,7 @@ class Event:
             Shows a bar graph of spending
         """
         buddf = pd.DataFrame(self.budlist, columns=['Type', 'Budget'])
+        plt.xticks(rotation = 90)
         plt.bar(buddf['Type'],buddf['Budget'])
 
 class Budget:
@@ -254,6 +255,8 @@ def main(fname, lname, email, orgname):
     """
     user = User(fname, lname, email, orgname)
     if user.email_check() == True & user.org_check() == True:
+        efile = open(f"{user.lname}{user.fname}.csv", 'w')
+        writer = csv.writer(efile)
         begin = input("\nDo you want to plan an event? (yes/no): ")
         if begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
@@ -280,6 +283,7 @@ def main(fname, lname, email, orgname):
             event1.budget = budget-loc_budget-food_budget-equip_budget-supplies_budget
             if event1.budget < 0:
                 event1.budget_tracker
+        writer.writerow(f"Event Planner: {user.fname} {user.lname} - {user.email}\nOrganization:{user.org}")
         
     print(f"Thank you for creating a profile with TerpPlanner. Your events will be saved in the file {user.lname}{user.fname}.csv")
     

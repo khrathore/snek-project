@@ -83,6 +83,7 @@ def main(fname, lname, email, orgname):
             name = input("\nPlease provide the name of the event: ")
             budget = float(input("Please provide the budget for your event: "))
             
+<<<<<<< HEAD
             food = True if input("\nDo you want food in your event? ").lower() == "yes" else False
             food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
             
@@ -93,6 +94,18 @@ def main(fname, lname, email, orgname):
             supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
             
             hours = float(input("\nHow long is your event going to be? (in Hrs): "))
+=======
+            food = True if input("Do you want food in your event? (yes/no):").lower() == "yes" else False
+            food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
+            
+            equip = True if input("Do you need equipment for your event? (yes/no):").lower() == "yes" else False
+            equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
+            
+            supplies = True if input("Do you need supplies for your event? (yes/no):").lower() == "yes" else False
+            supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
+            
+            hours = float(input("How long is your event going to be? (in hours): "))
+>>>>>>> f0221d7bef978b8832ab9f063fa439e885c55d6d
             loc_budget = float(input("How much do you want to spend on the location? "))
             
             print("\nFollowing are the available locations within your location budget:")
