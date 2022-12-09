@@ -5,6 +5,7 @@ import re
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
+import csv
 
 class User:
     """Defines a user object for the person planning the event
@@ -279,8 +280,8 @@ def main(fname, lname, email, orgname):
             event1.budget = budget-loc_budget-food_budget-equip_budget-supplies_budget
             if event1.budget < 0:
                 event1.budget_tracker
-        else:
-            print("Thank you for creating a profile with TerpPlanner.")
+        
+    print(f"Thank you for creating a profile with TerpPlanner. Your events will be saved in the file {user.lname}{user.fname}.csv")
     
 
     
