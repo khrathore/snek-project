@@ -36,23 +36,27 @@ class User:
 
 class Event():
     
-    def __init__(self, name, budget, food_budget, equip_budget, supplies_budget, loc_budget):
+    def __init__(self, name, budget, food_budget, equip_budget, supplies_budget, location, loc_cost):
         self.name = name
         self.budget = budget
         self.name = name
         self.food_budget = food_budget
         self.equi_budget = equip_budget
         self.supplies_budget = supplies_budget
-        self.loc_budget = loc_budget
+        self.loc_cost = loc_cost
+        self.location = location
         
-    def loc_checker(self, filepath = "Locations.txt"):
+        
+        
+def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
         best_location = {}
         with open(filepath, "r",encoding= "utf-8") as f:
             for line in f:
                 values= line.split(",")
-                if float(values[1].strip()) <= self.loc_budget:
+                if (float(values[1].strip())* hours) <= loc_budget:
                     best_location[values[0]] = float(values[1].strip())
-            return best_location 
+            return best_location
+        
         
             
 def main(fname, lname, email, orgname):
@@ -62,25 +66,48 @@ def main(fname, lname, email, orgname):
     
     if user.email_check() == True & user.org_check() == True:
         begin = input("\nDo you want to plan an event? (yes/no): ")
+        
         if begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
             budget = float(input("Please provide the budget for your event: "))
             
-            loc_budget = float(input("How much do you want to spend on the location? "))
-            
-            
             food = True if input("Do you want food in your event? ").lower() == "yes" else False
             food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
+            
             equip = True if input("Do you need equipments for your event? ").lower() == "yes" else False
             equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
+            
             supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
             supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
             
-    event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, loc_budget)
-    print("\nFollowing are the available locations within your location budget:")
-    affordable_loc = event1.loc_checker()
-    for location in affordable_loc:
-        print(f"{location}: ${affordable_loc[location]}")
+            hours = float(input("How long is your event going to be? (in Hrs): "))
+            loc_budget = float(input("How much do you want to spend on the location? "))
+            
+            print("\nFollowing are the available locations within your location budget:")
+            affordable_loc = loc_checker(loc_budget, hours)
+                
+            locChoices = {}
+            x = 1
+            for location in affordable_loc:
+                locChoices[x] = f"{location}: ${affordable_loc[location]}"
+                x += 1              
+            for choice in locChoices:
+                print(f"{choice}: {locChoices[choice]}")
+                
+            choice = int(input("\nSelect a number to pick a location: "))
+            selection = locChoices[choice].split(":")
+            location = selection[0]
+            loc_cost = affordable_loc[location] * hours
+            
+            
+                
+            
+                
+    
+    
+        
+        
+    event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, location, loc_cost)
             
             
             

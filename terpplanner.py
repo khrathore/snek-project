@@ -3,6 +3,9 @@
 from argparse import ArgumentParser
 import re
 import sys
+import pandas as pd
+import matplotlib.pyplot as plt
+import csv
 
 class User:
     """Defines a user object for the person planning the event
@@ -95,7 +98,7 @@ class Event:
         fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
         bud_vis(): Creates a diagram of the budget distribution.
     """
-    def __init__(self, name, budget, food_budget, equip_budget, supplies_budget, loc_budget):
+    def __init__(self, length, name, budget, food_budget, equip_budget, supplies_budget, loc_budget, budlist):
         """ Initializes the Event Class. - Sandra
         Args:
             location(str): The location of the event.
@@ -117,13 +120,14 @@ class Event:
             determine the budgets for the different event budget categories. 
         """
         self.name = name
+        self.length = length
         self.budget = budget
         self.name = name
+        self.loc_budget = loc_budget
         self.food_budget = food_budget
         self.equi_budget = equip_budget
         self.supplies_budget = supplies_budget
-        self.loc_budget = loc_budget
-            
+        self.budlist = budlist
         
     def loc_checker(self, filepath):
         """Determines the best location to hold an event based on a given budget. - Sandra
@@ -143,7 +147,7 @@ class Event:
             best_location={}
             for line in f:
                 values= line.split(",")
-                if float(values[1].strip()) <= self.loc_budget:
+                if float(values[1].strip()) <= self.loc_budget*self.length:
                     best_location[values[0]] = float(values[1].strip())
             return best_location
         
@@ -162,8 +166,7 @@ class Event:
         Returns: event_id(int)
             
         """
-        
-     
+    
     def budget_tracker(self, budget):
         """
         Budget tracker - Conditional Expression - Palrika
@@ -187,8 +190,9 @@ class Event:
         Khushboo: pyplot usage, creates a diagram of the budget distribution     
         Side effects: 
             Shows a bar graph of spending
-
         """
+        buddf = pd.DataFrame(self.budlist, columns=['Type', 'Budget'])
+        plt.bar(buddf['Type'],buddf['Budget'])
 
 class Budget:
     """Tracks budget objects
@@ -227,10 +231,8 @@ class Budget:
             type: If user overspends, this method will raise a type error.
         """
         
-        check = self.budget - other.budget
-        if check < 0:
-            raise TypeError 
-        else:
+        check = self.money - other.money
+        if check > 0:
             return f"${check} of your budget is left to spend."
     
 
@@ -255,22 +257,31 @@ def main(fname, lname, email, orgname):
         begin = input("\nDo you want to plan an event? (yes/no): ")
         if begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
-            evl = input("\nHow long will you event be: ")
-            budget = float(input("Please provide the budget for your event: "))
-            loc_budget = float(input("How much do you want to spend on the location? "))
-            food = True if input("Do you want food in your event? ").lower() == "yes" else False
-            food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
-            equip = True if input("Do you need equipments for your event? ").lower() == "yes" else False
-            equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
-            supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
-            supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
-            event1 = Event(name, evl, budget, food_budget, equip_budget, supplies_budget, loc_budget)
+            evl = input("\nHow long will your event be: ")
+            budget = Budget("Event", float(input("Please provide the budget for your event: ")))
+            bud_full = []
+            loc_budget = Budget("Location", float(input("How much do you want to spend on the location? ")))
+            if loc_budget.money > 0:
+                bud_full.append([loc_budget.type, loc_budget.money])
+            food_budget = Budget("Food", float(input("How much do you want to spend on food? ")))
+            if food_budget.money > 0:
+                bud_full.append([food_budget.type, food_budget.money])
+            equip_budget = Budget("Equipment", float(input("How much do you want to spend on equipment? ")))
+            if equip_budget.money > 0:
+                bud_full.append([equip_budget.type, equip_budget.money])
+            supplies_budget = Budget("Supplies",float(input("How much do you want to spend on supplies? ")))
+            if supplies_budget.money > 0:
+                bud_full.append([supplies_budget.type, supplies_budget.money])
+            event1 = Event(name, evl, budget, food_budget, equip_budget, supplies_budget, loc_budget, bud_full)
             print("\nFollowing are the available locations within your location budget:")
             affordable_loc = event1.loc_checker()
             for location in affordable_loc:
                 print(f"{location}: ${affordable_loc[location]}")
-        else:
-            print("Thank you for creating a profile with TerpPlanner.")
+            event1.budget = budget-loc_budget-food_budget-equip_budget-supplies_budget
+            if event1.budget < 0:
+                event1.budget_tracker
+        
+    print(f"Thank you for creating a profile with TerpPlanner. Your events will be saved in the file {user.lname}{user.fname}.csv")
     
 
     
