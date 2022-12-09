@@ -46,7 +46,7 @@ class Event():
     
     def budget_tracker(self):
         self.budget_obj = self.budget_obj - self.food_obj
-        return self.budget_obj.amount      
+        return self.budget_obj.amount       
         
 
 class Budget():    
