@@ -162,7 +162,7 @@ class Event:
         Returns: event_id(int)
             
         """
-    
+        
      
     def budget_tracker(self, budget):
         """
