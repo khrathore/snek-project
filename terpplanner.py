@@ -192,6 +192,7 @@ class Event:
             Shows a bar graph of spending
         """
         buddf = pd.DataFrame(self.budlist, columns=['Type', 'Budget'])
+        plt.xticks(rotation = 90)
         plt.bar(buddf['Type'],buddf['Budget'])
 
 class Budget:
