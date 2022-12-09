@@ -36,15 +36,27 @@ class User:
 
 class Event():
     
-    def __init__(self, name, budget, food_budget, equip_budget, supplies_budget, location, loc_cost):
+    def __init__(self, name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj):
         self.name = name
-        self.budget = budget
-        self.name = name
-        self.food_budget = food_budget
-        self.equi_budget = equip_budget
-        self.supplies_budget = supplies_budget
-        self.loc_cost = loc_cost
-        self.location = location
+        self.budget_obj = budget_obj
+        self.food_obj = food_obj
+        self.equip_obj = equip_obj
+        self.supplies_obj = supplies_obj
+        self.location = location_obj
+    
+    def budget_tracker(self):
+        self.budget_obj = self.budget_obj - self.food_obj
+        return self.budget_obj.amount      
+        
+
+class Budget():    
+    def __init__(self, type, amount):
+        self.type = type
+        self.amount = amount
+        
+    def __sub__(self, other):
+        check = self.amount - other.money
+        return check
         
         
         
@@ -52,7 +64,7 @@ def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
         best_location = {}
         with open(filepath, "r",encoding= "utf-8") as f:
             for line in f:
-                values= line.split(",")
+                values= line.split(":")
                 if (float(values[1].strip())* hours) <= loc_budget:
                     best_location[values[0]] = float(values[1].strip())
             return best_location
@@ -71,16 +83,16 @@ def main(fname, lname, email, orgname):
             name = input("\nPlease provide the name of the event: ")
             budget = float(input("Please provide the budget for your event: "))
             
-            food = True if input("Do you want food in your event? ").lower() == "yes" else False
+            food = True if input("\nDo you want food in your event? ").lower() == "yes" else False
             food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
             
-            equip = True if input("Do you need equipments for your event? ").lower() == "yes" else False
+            equip = True if input("\nDo you need equipments for your event? ").lower() == "yes" else False
             equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
             
-            supplies = True if input("Do you need supplies for your event? ").lower() == "yes" else False
+            supplies = True if input("\nDo you need supplies for your event? ").lower() == "yes" else False
             supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
             
-            hours = float(input("How long is your event going to be? (in Hrs): "))
+            hours = float(input("\nHow long is your event going to be? (in Hrs): "))
             loc_budget = float(input("How much do you want to spend on the location? "))
             
             print("\nFollowing are the available locations within your location budget:")
@@ -95,19 +107,23 @@ def main(fname, lname, email, orgname):
                 print(f"{choice}: {locChoices[choice]}")
                 
             choice = int(input("\nSelect a number to pick a location: "))
-            selection = locChoices[choice].split(":")
-            location = selection[0]
-            loc_cost = affordable_loc[location] * hours
-            
-            
-                
-            
-                
+            if choice in locChoices:                
+                selection = locChoices[choice].split(":")
+                location_name = selection[0]
+                loc_cost = affordable_loc[location] * hours
+            else:
+                raise IndexError("Selection out of range")
     
+    budget_obj = Budget("total", budget)        
+    food_obj = Budget("food", food_budget)
+    equip_obj = Budget("equip", equip_budget)
+    supplies_obj = Budget("supplies", supplies_budget)
+    location_obj = Budget(location_name, loc_cost)
+    event1 = Event(name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj)
     
-        
-        
-    event1 = Event(name, budget, food_budget, equip_budget, supplies_budget, location, loc_cost)
+    print(food_obj.amount)
+    
+    #print("You do not have enough budget for the expected spendings for this event." if event1.budget_tracker() < 0 else "Okay")
             
             
             
