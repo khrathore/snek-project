@@ -4,6 +4,7 @@ import re
 import sys
 import pandas as pd
 
+
 class User:
    
     def __init__(self, fname, lname, email, org):
@@ -42,11 +43,22 @@ class Event():
         self.food_obj = food_obj
         self.equip_obj = equip_obj
         self.supplies_obj = supplies_obj
-        self.location = location_obj
+        self.location_obj = location_obj
     
     def budget_tracker(self):
-        self.budget_obj = self.budget_obj - self.food_obj
-        return self.budget_obj.amount       
+        self.budget_obj.amount = self.budget_obj - self.food_obj 
+        self.budget_obj.amount = self.budget_obj - self.equip_obj
+        self.budget_obj.amount = self.budget_obj - self.supplies_obj
+        self.budget_obj.amount = self.budget_obj - self.location_obj
+        
+        if self.budget_obj.amount < 0:
+            return("You do not have enough budget for the expected spendings for this event.")
+        else:
+            return self.budget_obj
+    
+    def confirmation(self):
+        with open(f"{self.name}.txt", 'w', encoding= "utf-8") as f:
+            f.write(f"Event name: {self.name}")
         
 
 class Budget():    
@@ -55,7 +67,7 @@ class Budget():
         self.amount = amount
         
     def __sub__(self, other):
-        check = self.amount - other.money
+        check = self.amount - other.amount
         return check
         
         
@@ -73,13 +85,13 @@ def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
             
 def main(fname, lname, email, orgname):
     print(f"Welcome to Terp Planner {fname} {lname}!")
-    
     user = User(fname, lname, email, orgname)
+    id_set = set()
     
     if user.email_check() == True & user.org_check() == True:
         begin = input("\nDo you want to plan an event? (yes/no): ")
         
-        if begin.lower() == "yes":
+        while begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
             budget = float(input("Please provide the budget for your event: "))
             
@@ -110,58 +122,27 @@ def main(fname, lname, email, orgname):
             if choice in locChoices:                
                 selection = locChoices[choice].split(":")
                 location_name = selection[0]
-                loc_cost = affordable_loc[location] * hours
+                loc_cost = affordable_loc[location_name] * hours
             else:
                 raise IndexError("Selection out of range")
-    
-    budget_obj = Budget("total", budget)        
-    food_obj = Budget("food", food_budget)
-    equip_obj = Budget("equip", equip_budget)
-    supplies_obj = Budget("supplies", supplies_budget)
-    location_obj = Budget(location_name, loc_cost)
-    event1 = Event(name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj)
-    
-    print(food_obj.amount)
-    
-    #print("You do not have enough budget for the expected spendings for this event." if event1.budget_tracker() < 0 else "Okay")
             
+            budget_obj = Budget("total", budget)        
+            food_obj = Budget("food", food_budget)
+            equip_obj = Budget("equip", equip_budget)
+            supplies_obj = Budget("supplies", supplies_budget)
+            location_obj = Budget(location_name, loc_cost)
             
+            event1 = Event(name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj)
             
+            event1.confirmation()
             
-        
-        
+            begin = input("\nDo you want to plan another event? ")
     
-    #         name=input("Please provide the name of the event: ")
-    #         event=Event()
-    #         budget=float(input("Please provide the budget for your event: "))
-    #         if event.evbudget(budget) == True:
-    #             event.budget_tracker()
-    #         p1=float(input("Provide your budget for location: "))
-    #         if event.location(p1)==True:
-    #             s0=event.loc_checker()
-    #         p2=input("Does your event have a food budget? (yes/no): ")
-    #         if p2== p2.lower("yes"):
-    #             if event.food(p2)==True:
-    #                 food_bud=float(input("Please provide the budget for food: "))
-    #                 s1=event.budget_tracker()-event.food(food_bud)
-    #         p3=input("Do you want to have an equipment budget?(yes/no)")
-    #         if p3==p3.lower("yes"):
-    #             if event.equip(p3) == True:
-    #                 equip_bud=float(input("Please provide the budget for equipment: "))
-    #                 s2=event.budget_tracker()-event.equip(equip_bud)
-    #         p4= input("Do you want to have a music budget? (yes/no)")
-    #         if p4==p4.lower("yes"):
-    #             if event.music == True:
-    #                 music_bud=float(input("Please provide the budget for music: "))
-    #                 s3=event.budget_tracker()-event.music(music_bud)
-    #         p5= input("Do you want to have a supplies budget? (yes/no)")
-    #         if p5==p5.lower("yes"):
-    #             if event.supplies== True:
-    #                 supp_bud=float(input("Please provide the budget for supplies: "))
-    #                 s4=event.budget_tracker()-event.supplies(supp_bud)   
-
-def parse_args(comline):
     
+    
+    
+    
+def parse_args(comline):    
     parser = ArgumentParser()
     parser.add_argument("fname", help="first name of the student")
     parser.add_argument("lname", help = "last name of the student")
