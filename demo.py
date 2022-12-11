@@ -73,14 +73,15 @@ class Budget():
         
         
 def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
-        best_location = {}
-        with open(filepath, "r",encoding= "utf-8") as f:
-            for line in f:
-                values= line.split(":")
-                if (float(values[1].strip())* hours) <= loc_budget:
-                    best_location[values[0]] = float(values[1].strip())
-            return best_location
-        
+    best_location = {}
+    with open(filepath, "r",encoding= "utf-8") as f:
+        for line in f:
+            values= line.strip().split(":")
+            if (float(values[1])* hours) <= loc_budget:
+                best_location[values[0]] = float(values[1])
+    
+    return sorted(best_location.items(), key= lambda x : x[1])
+    
         
             
 def main(fname, lname, email, orgname):
@@ -93,7 +94,7 @@ def main(fname, lname, email, orgname):
         
         while begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
-            budget = float(input("Please provide the budget for your event: "))
+            budget = float(input("\nPlease provide the budget for your event: "))
             
             food = True if input("\nDo you want food in your event? ").lower() == "yes" else False
             food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
@@ -108,21 +109,27 @@ def main(fname, lname, email, orgname):
             loc_budget = float(input("How much do you want to spend on the location? "))
             
             print("\nFollowing are the available locations within your location budget:")
+            
             affordable_loc = loc_checker(loc_budget, hours)
                 
-            locChoices = {}
+            locOptions = {}
             x = 1
-            for location in affordable_loc:
-                locChoices[x] = f"{location}: ${affordable_loc[location]}"
+            for name, price in affordable_loc:
+                locOptions[x] = f"{name}: ${price}"
                 x += 1              
-            for choice in locChoices:
-                print(f"{choice}: {locChoices[choice]}")
+            for option in locOptions:
+                print(f"{option}: {locOptions[option]}")
                 
             choice = int(input("\nSelect a number to pick a location: "))
-            if choice in locChoices:                
-                selection = locChoices[choice].split(":")
+            if choice in locOptions:                
+                selection = locOptions[choice].split(": $")
                 location_name = selection[0]
+<<<<<<< HEAD
                 loc_cost = affordable_loc[location_name] * hours
+=======
+                loc_cost = float(selection[1]) * hours
+               
+>>>>>>> 9b140e52f80d9461b649e11a24af1e4fd60d0679
             else:
                 raise IndexError("Selection out of range")
             

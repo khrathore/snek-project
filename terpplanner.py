@@ -170,20 +170,21 @@ class Event:
     def budget_tracker(self, budget):
         """
         Budget tracker - Conditional Expression - Palrika
-        Keeps track of the budget and calls the fundraise() method using a conditional
-        expression if the budget falls below 0.   
+        Keeps track of the budget and prints a fundraise f-string based on 
+        whether the group is overspending or not.   
             
         Args: 
             budget (float): User-inputted funds they have to plan the event.
             
         Side effect:
             Creates new budget object
-            If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need"
 
         """
-        if budget < 0:
+        if self.budget < 0:
             f"You are overspending your budget. Your group will need to fundraise ${abs(self.budget)}."
-            
+        else:
+            f"You have ${self.budget} left in your budget."
+
         
     def bud_vis(self):
         """
