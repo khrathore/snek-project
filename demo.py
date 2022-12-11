@@ -124,12 +124,8 @@ def main(fname, lname, email, orgname):
             if choice in locOptions:                
                 selection = locOptions[choice].split(": $")
                 location_name = selection[0]
-<<<<<<< HEAD
-                loc_cost = affordable_loc[location_name] * hours
-=======
                 loc_cost = float(selection[1]) * hours
                
->>>>>>> 9b140e52f80d9461b649e11a24af1e4fd60d0679
             else:
                 raise IndexError("Selection out of range")
             
