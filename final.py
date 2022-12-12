@@ -28,7 +28,8 @@ class User:
                 fname (str): The first name of the user.
                 lname (str): The last name of the user.
                 email (str): The email address of the user.
-                org (str): The name of the organziation that he user is planning the event for.
+                org (str): The name of the organziation that he user is planning 
+                the event for.
                 
             Side effects:
                 A user object is created with the aforementioned attributes.
@@ -45,7 +46,8 @@ class User:
         Written by Khushboo Rathore - Shows Regex
         
         Raises:
-            ValueError: If the program does not find a matching email it raises an error
+            ValueError: If the program does not find a matching email it raises 
+            an error
         """
         patt1 = re.compile(r"^[^@]+@terpmail.umd.edu")
         patt2 = re.compile(r"^[^@]+@umd.edu")
@@ -103,7 +105,8 @@ class Event:
     
     def __init__(self, name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj, duration):
         """
-            Creates an Event Object and keeps track of budget. Also creates a confirmation .txt file
+            Creates an Event Object and keeps track of budget. Also creates a 
+            confirmation .txt file
             Written by Sandra Aching
             Args:
                 name(str): name of the event
@@ -230,7 +233,8 @@ class Budget:
     
 def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
     """ 
-    Finds all the location that the user can afford based on hourly rates and event hours
+    Finds all the location that the user can afford based on hourly rates and 
+    event hours
     Written by Kabindra Suwal - Shows lamba expression
     Args:
         loc_budget(float): The amount of money the user budgets for location.
