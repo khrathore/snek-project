@@ -140,7 +140,7 @@ class Event:
         self.budget_obj.amount = self.budget_obj - self.location_obj
         
         if self.budget_obj.amount < 0:
-            return(f"You are overspending your budget. Your group will need to fundraise ${abs(event.budget_obj.amount)}.")
+            return(f"You are overspending your budget. Your group will need to fundraise ${abs(self.budget_obj.amount)}.")
         else:
             return self.budget_obj
         
