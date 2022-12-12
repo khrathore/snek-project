@@ -85,6 +85,7 @@ class User:
 class Event:
     """
         Define an Event object for the event that the user is organizing
+        Written by Sandra Aching
     
         Attributes:
             name(str): name of the event
@@ -100,7 +101,7 @@ class Event:
     def __init__(self, name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj, duration):
         """
             Creates an Event Object and keeps track of budget. Also creates a confirmation .txt file
-            
+            Written by Sandra Aching
             Args:
                 name(str): name of the event
                 budget_obj(Budget): Budget object for the total budget
@@ -227,8 +228,18 @@ class Budget:
     
     
 def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
-    """
-        Finds all the location that the user can afford based on hourly rates and event hours
+    """ 
+    Finds all the location that the user can afford based on hourly rates and event hours
+    Written by Kabindra Suwal - Shows lamba expression
+    Args:
+        loc_budget(float): The amount of money the user budgets for location.
+        hours(float): The amount of time the user anticipates that the event
+        will run.
+        filepath(str): The path to a text file of locations in UMD with their
+        coresponding prices. 
+    Returns:
+        dict: A dictionary of locations sorted based on price according to the 
+        amount of money the user budgets for location. 
     
     """
     best_location = {}
@@ -241,6 +252,18 @@ def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
     return sorted(best_location.items(), key= lambda x : x[1])
     
 def main(fname, lname, email, orgname):
+    """Calculates the overall event budget based on user input.
+       Written by Kabindra Suwal -Shows Conditional Expressions
+    Args:
+        fname(str): The first name of the person.
+        lname(str): The last name of the person.
+        email(str): The UMD email of the person.
+        org(str): The organization the event is for.
+
+    Raises:
+        IndexError: Indicates that user selection is out of the range of 
+        location options.
+    """
     print(f"Welcome to Terp Planner {fname} {lname}!")
     user = User(fname, lname, email, orgname)
     id_set = set()
