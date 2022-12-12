@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import string
 import random
 import re
 import sys
@@ -14,6 +15,7 @@ class User:
         self.email = email
         self.org = org
         
+        
 
 class Event:
     
@@ -24,7 +26,7 @@ class Event:
         self.budget_obj.amount = self.budget_obj - self.location_obj
         
         if self.budget_obj.amount < 0:
-            return("You do not have enough budget for the expected spendings for this event.")
+            return(f"You are overspending your budget. Your group will need to fundraise ${abs(event.budget_obj.amount)}.")
         else:
             return self.budget_obj
     
