@@ -16,14 +16,11 @@ class User:
         email(str): The UMD email of the person
         org(str): The organization the event is for
         
-    Methods:
-        email_check(): Checks that the email is a UMD email
-        org_check(): Checks that the org is one registered with UMD
     """
     
     def __init__(self, fname, lname, email, org):
-        """
-        Creates a User class. - Palrika 
+        """ 
+        Creates a User class. - Palrika                                     
             
         Args:  
             fname (str): The first name of the user.
@@ -91,12 +88,6 @@ class Event:
         supplies(bool):Determines whether the event will need supplies;
         default is False.
         
-    Methods: 
-        loc_checker(str): Determines the best location to hold an event based on a given budget
-        event_id)(set of INT):  Give an random event ID for each event, also add it to a set of IDS.
-        budget_tracker(float):Keeps track of the budget to help the user to not overspend.  
-        fundraise():If the budget tracker becomes negative print a statement that uses f-strings to say "this is how much you need".
-        bud_vis(): Creates a diagram of the budget distribution.
     """
     def __init__(self, length, name, budget, food_budget, equip_budget, supplies_budget, loc_budget, budlist):
         """ Initializes the Event Class. - Sandra
@@ -261,7 +252,7 @@ def main(fname, lname, email, orgname):
         begin = input("\nDo you want to plan an event? (yes/no): ")
         if begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
-            evl = input("\nHow long will your event be: ")
+            evl = input("\nHow long will your event be (in hours): ")
             budget = Budget("Event", float(input("Please provide the budget for your event: ")))
             bud_full = []
             loc_budget = Budget("Location", float(input("How much do you want to spend on the location? ")))
@@ -270,7 +261,7 @@ def main(fname, lname, email, orgname):
             food_budget = Budget("Food", float(input("How much do you want to spend on food? ")))
             if food_budget.money > 0:
                 bud_full.append([food_budget.type, food_budget.money])
-            equip_budget = Budget("Equipment", float(input("How much do you want to spend on equipment? ")))
+            equip_budget = Budget("Equipment", float(input("How much do you want to spend on tech equipment? ")))
             if equip_budget.money > 0:
                 bud_full.append([equip_budget.type, equip_budget.money])
             supplies_budget = Budget("Supplies",float(input("How much do you want to spend on supplies? ")))
