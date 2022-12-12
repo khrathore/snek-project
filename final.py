@@ -48,6 +48,15 @@ class Budget:
     
     
     
+def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
+    best_location = {}
+    with open(filepath, "r",encoding= "utf-8") as f:
+        for line in f:
+            values= line.strip().split(":")
+            if (float(values[1])* hours) <= loc_budget:
+                best_location[values[0]] = float(values[1])
+    
+    return sorted(best_location.items(), key= lambda x : x[1])
     
 def main(fname, lname, email, orgname):
     print(f"Welcome to Terp Planner {fname} {lname}!")
@@ -116,15 +125,7 @@ def main(fname, lname, email, orgname):
             id_set.add(event.event)    
       
 
-def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
-    best_location = {}
-    with open(filepath, "r",encoding= "utf-8") as f:
-        for line in f:
-            values= line.strip().split(":")
-            if (float(values[1])* hours) <= loc_budget:
-                best_location[values[0]] = float(values[1])
-    
-    return sorted(best_location.items(), key= lambda x : x[1])
+
 
 def parse_args(comline):    
     parser = ArgumentParser()
