@@ -33,10 +33,10 @@ class User:
             Side effects:
                 A user object is created with the aforementioned attributes.
             """
-        self.fname = fname
-        self.lname = lname
-        self.email = email
-        self.org = org
+        self.fname = fname 
+        self.lname = lname 
+        self.email = email 
+        self.org = org 
     
     
     def email_check(self):
