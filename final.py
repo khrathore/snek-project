@@ -52,12 +52,61 @@ class User:
             return True 
         else:
             raise ValueError("The email you provided is not valid.")
+        
+        
+    def org_check(self, org_file = "Organizations.txt"):
+        """ 
+            Written by Rabindra
+            Uses With statement and List Comprehension
+            Takes the org name
+            with statement to read the file
+            compares to make sure it's an active campus org, otherwises errors
+            
+            Args:
+                org_file(str): File with with Organizations
+            
+            Returns: 
+                Boolean Value
+        """
+        org_list = []
+        with open(org_file, 'r') as f:
+            org_list = [line.strip() for line in f]
+        
+        if self.org in org_list:
+            return True
+        else:
+            raise ValueError(f"{self.org} is not an active Campus Org")
     
         
 
 class Event:
+    """
+        Define an Event object for the event that the user is organizing
+    
+        Attributes:
+            name(str): name of the event
+            budget_obj(Budget): Budget object for the total budget
+            food_obj(Budget): Budget object for the food budget
+            equip_obj(Budget): Budget object for the equipment budget
+            supplies_obj(Budget): Budget object for the supplies budget
+            location_obj(Budget): Budget object for the location budget
+            duration(float): Number of hours that the event will go on
+
+    """
     
     def __init__(self, name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj, duration):
+        """
+            Creates an Event Object and keeps track of budget. Also creates a confirmation .txt file
+            
+            Args:
+                name(str): name of the event
+                budget_obj(Budget): Budget object for the total budget
+                food_obj(Budget): Budget object for the food budget
+                equip_obj(Budget): Budget object for the equipment budget
+                supplies_obj(Budget): Budget object for the supplies budget
+                location_obj(Budget): Budget object for the location budget
+                duration(float): Number of hours that the event will go on
+        """
         self.name = name
         self.budget_obj = budget_obj
         self.food_obj = food_obj
@@ -72,7 +121,7 @@ class Event:
         whether the group is overspending or not.   
             
         Side effect:
-            Creates new budget object
+            Updates the value for of total budget
         """
         self.budget_obj.amount = self.budget_obj - self.food_obj 
         self.budget_obj.amount = self.budget_obj - self.equip_obj
@@ -83,6 +132,35 @@ class Event:
             return(f"You are overspending your budget. Your group will need to fundraise ${abs(event.budget_obj.amount)}.")
         else:
             return self.budget_obj
+        
+        
+    def confirmation(self):
+        """
+            Creates a text file as a confirmation
+            Written by Rabindra
+            
+            Args:
+                self : attributes of self
+                
+            Side effects:
+                Creates a file with the event name as the file name.
+        """
+        newline = '\n'
+        with open(f"{self.name}.txt", 'w', encoding= "utf-8") as f:
+            f.write("Event Confirmation\n\n")
+            f.write(f"Event name                     : {self.name}{newline}")
+            f.write(f"Your budget for the event      : ${self.budget_obj.amount}{newline}")
+            f.write(f"Location                       : {self.location_obj.type}{newline}")
+            f.write(f"Duration of the event          : {self.duration} hours{newline}")
+            f.write(f"Total rent for location        : ${self.location_obj.amount}{newline}")
+            f.write(f"Expected food expense          : ${self.food_obj.amount}{newline}")
+            f.write(f"Expected equipment expense     : ${self.equip_obj.amount}{newline}")
+            f.write(f"Expected supplies expense      : ${self.supplies_obj.amount}{newline}")
+            
+            if isinstance(self.budget_tracker(), str):
+                f.write(self.budget_tracker())
+            else:
+                f.write(f"Remaining Budget for your Event: ${self.budget_obj.amount}")
     
     def bud_vis(self):
         """
@@ -143,6 +221,10 @@ class Budget:
     
     
 def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
+    """
+        Finds all the location that the user can afford based on hourly rates and event hours
+    
+    """
     best_location = {}
     with open(filepath, "r",encoding= "utf-8") as f:
         for line in f:
@@ -214,9 +296,7 @@ def main(fname, lname, email, orgname):
             else:
                 event.bud_vis()
             
-            begin = input("\nDo you want to plan another event? ")
-            
-            id_set.add(event.event)    
+            begin = input("\nDo you want to plan another event? ")   
       
 
 
