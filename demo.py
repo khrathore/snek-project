@@ -123,18 +123,18 @@ def main(fname, lname, email, orgname):
         
         while begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
-            budget = float(input("\nPlease provide the budget for your event: "))
+            budget = float(input("\nPlease provide the budget for your event (in dollars): "))
             
-            food = True if input("\nDo you want food in your event? ").lower() == "yes" else False
+            food = True if input("\nDo you want food in your event? (yes/no): ").lower() == "yes" else False
             food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
             
-            equip = True if input("\nDo you need equipments for your event? ").lower() == "yes" else False
+            equip = True if input("\nDo you need tech equipments for your event? (yes/no): ").lower() == "yes" else False
             equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
             
-            supplies = True if input("\nDo you need supplies for your event? ").lower() == "yes" else False
+            supplies = True if input("\nDo you need supplies for your event? (yes/no): ").lower() == "yes" else False
             supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
             
-            hours = float(input("\nHow long is your event going to be? (in Hrs): "))
+            hours = float(input("\nHow long is your event going to be? (in hours): "))
             loc_budget = float(input("How much do you want to spend on the location? "))
             
             print("\nFollowing are the available locations within your location budget:")
