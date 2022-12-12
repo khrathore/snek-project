@@ -59,17 +59,20 @@ class User:
         
     def org_check(self, org_file = "Organizations.txt"):
         """ 
-            Written by Rabindra
-            Uses With statement and List Comprehension
-            Takes the org name
-            with statement to read the file
-            compares to make sure it's an active campus org, otherwises errors
+            Written by Rabindra Suwal - Shows list comprehension
+            Takes the organization name from a text file and compares to make 
+            sure it is an active campus org, otherwises raises ValueError
             
             Args:
                 org_file(str): File with with Organizations
             
             Returns: 
                 Boolean Value
+                
+            Raises:
+                ValueError: Indicates that the organization entered by the User
+                is not a campus organization.
+
         """
         org_list = []
         with open(org_file, 'r') as f:
@@ -123,9 +126,8 @@ class Event:
         """
         Keeps track of the budget and prints a fundraise f-string based on 
         whether the group is overspending or not.   
-        Written by Palrika Kasondra - Shows f-strings and conditional statements
+        Written by Palrika Kasondra - Shows f-strings 
 
-            
         Side effect:
             Updates the value for of total budget
         """
@@ -143,7 +145,7 @@ class Event:
     def confirmation(self):
         """
             Creates a text file as a confirmation
-            Written by Rabindra
+            Written by Rabindra Suwal - Shows with statement
             
             Args:
                 self : attributes of self
@@ -226,7 +228,6 @@ class Budget:
         return check
     
     
-    
 def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
     """ 
     Finds all the location that the user can afford based on hourly rates and event hours
@@ -251,9 +252,10 @@ def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
     
     return sorted(best_location.items(), key= lambda x : x[1])
     
+    
 def main(fname, lname, email, orgname):
     """Calculates the overall event budget based on user input.
-       Written by Kabindra Suwal -Shows Conditional Expressions
+       Written by Kabindra Suwal - Shows Conditional Expressions
     Args:
         fname(str): The first name of the person.
         lname(str): The last name of the person.
@@ -330,7 +332,11 @@ def main(fname, lname, email, orgname):
 
 
 
-def parse_args(comline):    
+def parse_args(comline):  
+    """
+    Written by Sandra Aching - Shows the Argument Parser class and sequence 
+    unpacking
+    """  
     parser = ArgumentParser()
     parser.add_argument("fname", help="first name of the student")
     parser.add_argument("lname", help = "last name of the student")
