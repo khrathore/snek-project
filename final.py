@@ -67,6 +67,13 @@ class Event:
         self.duration = duration
     
     def budget_tracker(self):
+        """Palrika
+        Keeps track of the budget and prints a fundraise f-string based on 
+        whether the group is overspending or not.   
+            
+        Side effect:
+            Creates new budget object
+        """
         self.budget_obj.amount = self.budget_obj - self.food_obj 
         self.budget_obj.amount = self.budget_obj - self.equip_obj
         self.budget_obj.amount = self.budget_obj - self.supplies_obj
@@ -118,6 +125,18 @@ class Budget:
         self.amount = amount
 
     def __sub__(self, other):
+        """
+        Written by: Palrika; Shows Magic Method
+        Compares the given budget with contemporary budget.
+        
+        Args:
+            other(Budget): The amount of money the user uses while planning the 
+            event.
+
+        Returns:
+            check (float): The amount of money left after subtracting the 
+            contemporary budget from the actual budget. 
+        """
         check = self.amount - other.amount
         return check
     
