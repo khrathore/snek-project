@@ -8,8 +8,28 @@ import matplotlib.pyplot as plt
 
 
 class User:
-   
+    """Defines a user object for the person planning the event
+    
+        Attributes:
+            fname(str): The first name of the person
+            lname(str): The last name of the person
+            email(str): The UMD email of the person
+            org(str): The organization the event is for
+    """
+
     def __init__(self, fname, lname, email, org):
+        """ 
+            Creates a User class. - Palrika                                     
+                
+            Args:  
+                fname (str): The first name of the user.
+                lname (str): The last name of the user.
+                email (str): The email address of the user.
+                org (str): The name of the organziation that he user is planning the event for.
+                
+            Side effects:
+                A user object is created with the aforementioned attributes.
+            """
         self.fname = fname
         self.lname = lname
         self.email = email
