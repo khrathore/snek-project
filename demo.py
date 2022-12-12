@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import string
 import random
 import re
 import sys
@@ -46,6 +47,12 @@ class Event():
         self.supplies_obj = supplies_obj
         self.location_obj = location_obj
         self.duration = duration
+        
+    
+    def event_id(self):
+        self.id = ((''.join(random.choice(string.digits) for i in range(4))) + (''.join(random.choice(string.ascii_uppercase) for i in range(2))))
+        return self.id
+        
     
     def budget_tracker(self):
         self.budget_obj.amount = self.budget_obj - self.food_obj 
@@ -54,7 +61,7 @@ class Event():
         self.budget_obj.amount = self.budget_obj - self.location_obj
         
         if self.budget_obj.amount < 0:
-            return("You do not have enough budget for the expected spendings for this event.")
+            return(f"You are overspending your budget. Your group will need to fundraise ${abs(event.budget_obj.amount)}.")
         else:
             return self.budget_obj
     
@@ -123,18 +130,9 @@ def main(fname, lname, email, orgname):
         
         while begin.lower() == "yes":
             name = input("\nPlease provide the name of the event: ")
-            budget = float(input("\nPlease provide the budget for your event (in dollars): "))
+            budget = float(input("\nPlease provide the budget for your event: "))
             
-            food = True if input("\nDo you want food in your event? (yes/no): ").lower() == "yes" else False
-            food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
-            
-            equip = True if input("\nDo you need tech equipments for your event? (yes/no): ").lower() == "yes" else False
-            equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
-            
-            supplies = True if input("\nDo you need supplies for your event? (yes/no): ").lower() == "yes" else False
-            supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
-            
-            hours = float(input("\nHow long is your event going to be? (in hours): "))
+            hours = float(input("\nHow long is your event going to be? (in Hrs): "))
             loc_budget = float(input("How much do you want to spend on the location? "))
             
             print("\nFollowing are the available locations within your location budget:")
@@ -144,7 +142,7 @@ def main(fname, lname, email, orgname):
             locOptions = {}
             x = 1
             for loc_name, price in affordable_loc:
-                locOptions[x] = f"{loc_name}: ${price}"
+                locOptions[x] = f"{loc_name}: ${price*hours}"
                 x += 1              
             for option in locOptions:
                 print(f"{option}: {locOptions[option]}")
@@ -153,10 +151,21 @@ def main(fname, lname, email, orgname):
             if choice in locOptions:                
                 selection = locOptions[choice].split(": $")
                 location_name = selection[0]
-                loc_cost = float(selection[1]) * hours
+                loc_cost = float(selection[1])
                
             else:
                 raise IndexError("Selection out of range")
+            
+            food = True if input("\nDo you want food in your event?(yes/no) ").lower() == "yes" else False
+            food_budget = float(input("How much do you want to spend on food? ")) if food == True else 0
+            
+            equip = True if input("\nDo you need equipments for your event?(yes/no) ").lower() == "yes" else False
+            equip_budget = float(input("How much do you want to spend on equipment? ")) if equip == True else 0
+            
+            supplies = True if input("\nDo you need supplies for your event?(yes/no) ").lower() == "yes" else False
+            supplies_budget = float(input("How much do you want to spend on supplies? ")) if supplies == True else 0
+            
+           
             
             budget_obj = Budget("total", budget)        
             food_obj = Budget("food", food_budget)
@@ -169,11 +178,13 @@ def main(fname, lname, email, orgname):
             event.confirmation()
             
             if event.budget_obj.amount < 0:
-                print("You do not have enough budget for the expected spendings for this event.")
+                print(f"You are overspending your budget. Your group will need to fundraise ${abs(event.budget_obj.amount)}.")
             else:
                 event.bud_vis()
             
             begin = input("\nDo you want to plan another event? ")
+            
+            id_set.add(event.event)
     
     
     
