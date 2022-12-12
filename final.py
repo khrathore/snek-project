@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 
 
 class User:
-    """Defines a user object for the person planning the event
+    """ Written by Palrika Kasondra
+        Defines a user object for the person planning the event
     
         Attributes:
             fname(str): The first name of the person
@@ -19,7 +20,9 @@ class User:
 
     def __init__(self, fname, lname, email, org):
         """ 
-            Creates a User class. - Palrika                                     
+            Creates a User class.      
+            Written by Palrika Kasondra
+                              
                 
             Args:  
                 fname (str): The first name of the user.
@@ -116,9 +119,11 @@ class Event:
         self.duration = duration
     
     def budget_tracker(self):
-        """Palrika
+        """
         Keeps track of the budget and prints a fundraise f-string based on 
         whether the group is overspending or not.   
+        Written by Palrika Kasondra - Shows f-strings and conditional statements
+
             
         Side effect:
             Updates the value for of total budget
@@ -180,6 +185,7 @@ class Event:
 
 class Budget:
     """Tracks budget objects
+        Written by Sandra Aching
     
     Attributes:
         type(str): The category of the budget
@@ -204,8 +210,8 @@ class Budget:
 
     def __sub__(self, other):
         """
-        Written by: Palrika; Shows Magic Method
         Compares the given budget with contemporary budget.
+        Written by Palrika Kasondra - Shows Magic Method
         
         Args:
             other(Budget): The amount of money the user uses while planning the 
