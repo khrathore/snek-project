@@ -34,7 +34,25 @@ class User:
         self.lname = lname
         self.email = email
         self.org = org
+    
+    
+    def email_check(self):
+        """
+        Uses a regex expression to check whether the email provided is a umd one.
+        Written by Khushboo Rathore - Shows Regex
         
+        Raises:
+            ValueError: If the program does not find a matching email it raises an error
+        """
+        patt1 = re.compile(r"^[^@]+@terpmail.umd.edu")
+        patt2 = re.compile(r"^[^@]+@umd.edu")
+        match1 = patt1.search(self.email)
+        match2 = patt2.search(self.email)
+        if match1 or match2:
+            return True 
+        else:
+            raise ValueError("The email you provided is not valid.")
+    
         
 
 class Event:
@@ -59,8 +77,45 @@ class Event:
         else:
             return self.budget_obj
     
+    def bud_vis(self):
+        """
+        Creates a diagram of budget distribution
+        Written by Khushboo Rathore - Shows Pyplot  
+        
+        Side effects: 
+            Creates and shows a bar graph of spending
+        """
+        labels = ["location", self.food_obj.type, self.equip_obj.type, self.supplies_obj.type]
+        data = [self.location_obj.amount, self.food_obj.amount, self.equip_obj.amount, self.supplies_obj.amount]
+        plt.xlabel('Expenses')
+        plt.ylabel('Amounts')
+        plt.title('Expenses Distribution')
+        plt.bar(labels, data) 
+        plt.show()
 
 class Budget:
+    """Tracks budget objects
+    
+    Attributes:
+        type(str): The category of the budget
+        money(float): The budgeted amount for that category
+
+    """
+
+    def __init__(self, type, amount):
+        """
+        Create a budget object
+        Written by Khushboo Rathore
+        
+        Args:
+            type(str): The category of the budget
+            amount(float): The budgeted money for that category
+            
+        Side efffects:
+            Creates a budget object
+        """
+        self.type = type
+        self.amount = amount
 
     def __sub__(self, other):
         check = self.amount - other.amount
