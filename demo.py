@@ -3,6 +3,7 @@ import random
 import re
 import sys
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 class User:
@@ -37,13 +38,14 @@ class User:
 
 class Event():
     
-    def __init__(self, name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj):
+    def __init__(self, name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj, duration):
         self.name = name
         self.budget_obj = budget_obj
         self.food_obj = food_obj
         self.equip_obj = equip_obj
         self.supplies_obj = supplies_obj
         self.location_obj = location_obj
+        self.duration = duration
     
     def budget_tracker(self):
         self.budget_obj.amount = self.budget_obj - self.food_obj 
@@ -57,8 +59,35 @@ class Event():
             return self.budget_obj
     
     def confirmation(self):
+        newline = '\n'
         with open(f"{self.name}.txt", 'w', encoding= "utf-8") as f:
-            f.write(f"Event name: {self.name}")
+            f.write("Event Confirmation\n\n")
+            f.write(f"Event name                     : {self.name}{newline}")
+            f.write(f"Your budget for the event      : ${self.budget_obj.amount}{newline}")
+            f.write(f"Location                       : {self.location_obj.type}{newline}")
+            f.write(f"Duration of the event          : {self.duration} hours{newline}")
+            f.write(f"Total rent for location        : ${self.location_obj.amount}{newline}")
+            f.write(f"Expected food expense          : ${self.food_obj.amount}{newline}")
+            f.write(f"Expected equipment expense     : ${self.equip_obj.amount}{newline}")
+            f.write(f"Expected supplies expense      : ${self.supplies_obj.amount}{newline}")
+            
+            if isinstance(self.budget_tracker(), str):
+                f.write(self.budget_tracker())
+            else:
+                f.write(f"Remaining Budget for your Event: ${self.budget_obj.amount}")
+                
+    def bud_vis(self):
+        labels = ["location", self.food_obj.type, self.equip_obj.type, self.supplies_obj.type]
+        data = [self.location_obj.amount, self.food_obj.amount, self.equip_obj.amount, self.supplies_obj.amount]
+       
+        #plt.xticks(range(len(data)), labels)
+        plt.xlabel('Expenses')
+        plt.ylabel('Amounts')
+        plt.title('Expenses Distribution')
+        plt.bar(labels, data) 
+        plt.show()
+        
+        
         
 
 class Budget():    
@@ -114,8 +143,8 @@ def main(fname, lname, email, orgname):
                 
             locOptions = {}
             x = 1
-            for name, price in affordable_loc:
-                locOptions[x] = f"{name}: ${price}"
+            for loc_name, price in affordable_loc:
+                locOptions[x] = f"{loc_name}: ${price}"
                 x += 1              
             for option in locOptions:
                 print(f"{option}: {locOptions[option]}")
@@ -135,9 +164,14 @@ def main(fname, lname, email, orgname):
             supplies_obj = Budget("supplies", supplies_budget)
             location_obj = Budget(location_name, loc_cost)
             
-            event1 = Event(name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj)
+            event = Event(name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj, hours)
             
-            event1.confirmation()
+            event.confirmation()
+            
+            if event.budget_obj.amount < 0:
+                print("You do not have enough budget for the expected spendings for this event.")
+            else:
+                event.bud_vis()
             
             begin = input("\nDo you want to plan another event? ")
     
