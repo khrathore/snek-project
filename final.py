@@ -28,15 +28,16 @@ class User:
                 fname (str): The first name of the user.
                 lname (str): The last name of the user.
                 email (str): The email address of the user.
-                org (str): The name of the organziation that he user is planning the event for.
+                org (str): The name of the organziation that he user is planning 
+                the event for.
                 
             Side effects:
                 A user object is created with the aforementioned attributes.
             """
-        self.fname = fname
-        self.lname = lname
-        self.email = email
-        self.org = org
+        self.fname = fname 
+        self.lname = lname 
+        self.email = email 
+        self.org = org 
     
     
     def email_check(self):
@@ -45,7 +46,8 @@ class User:
         Written by Khushboo Rathore - Shows Regex
         
         Raises:
-            ValueError: If the program does not find a matching email it raises an error
+            ValueError: If the program does not find a matching email it raises 
+            an error
         """
         patt1 = re.compile(r"^[^@]+@terpmail.umd.edu")
         patt2 = re.compile(r"^[^@]+@umd.edu")
@@ -59,17 +61,20 @@ class User:
         
     def org_check(self, org_file = "Organizations.txt"):
         """ 
-            Written by Rabindra
-            Uses With statement and List Comprehension
-            Takes the org name
-            with statement to read the file
-            compares to make sure it's an active campus org, otherwises errors
+            Written by Rabindra Suwal - Shows list comprehension
+            Takes the organization name from a text file and compares to make 
+            sure it is an active campus org, otherwises raises ValueError
             
             Args:
                 org_file(str): File with with Organizations
             
             Returns: 
                 Boolean Value
+                
+            Raises:
+                ValueError: Indicates that the organization entered by the User
+                is not a campus organization.
+
         """
         org_list = []
         with open(org_file, 'r') as f:
@@ -85,6 +90,7 @@ class User:
 class Event:
     """
         Define an Event object for the event that the user is organizing
+        Written by Sandra Aching
     
         Attributes:
             name(str): name of the event
@@ -99,8 +105,9 @@ class Event:
     
     def __init__(self, name, budget_obj, food_obj, equip_obj, supplies_obj, location_obj, duration):
         """
-            Creates an Event Object and keeps track of budget. Also creates a confirmation .txt file
-            
+            Creates an Event Object and keeps track of budget. Also creates a 
+            confirmation .txt file
+            Written by Sandra Aching
             Args:
                 name(str): name of the event
                 budget_obj(Budget): Budget object for the total budget
@@ -122,9 +129,8 @@ class Event:
         """
         Keeps track of the budget and prints a fundraise f-string based on 
         whether the group is overspending or not.   
-        Written by Palrika Kasondra - Shows f-strings and conditional statements
+        Written by Palrika Kasondra - Shows f-strings 
 
-            
         Side effect:
             Updates the value for of total budget
         """
@@ -142,7 +148,7 @@ class Event:
     def confirmation(self):
         """
             Creates a text file as a confirmation
-            Written by Rabindra
+            Written by Rabindra Suwal - Shows with statement
             
             Args:
                 self : attributes of self
@@ -225,10 +231,20 @@ class Budget:
         return check
     
     
-    
 def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
-    """
-        Finds all the location that the user can afford based on hourly rates and event hours
+    """ 
+    Finds all the location that the user can afford based on hourly rates and 
+    event hours
+    Written by Kabindra Suwal - Shows lamba expression
+    Args:
+        loc_budget(float): The amount of money the user budgets for location.
+        hours(float): The amount of time the user anticipates that the event
+        will run.
+        filepath(str): The path to a text file of locations in UMD with their
+        coresponding prices. 
+    Returns:
+        dict: A dictionary of locations sorted based on price according to the 
+        amount of money the user budgets for location. 
     
     """
     best_location = {}
@@ -240,7 +256,20 @@ def loc_checker(loc_budget, hours, filepath = "Locations.txt"):
     
     return sorted(best_location.items(), key= lambda x : x[1])
     
+    
 def main(fname, lname, email, orgname):
+    """Calculates the overall event budget based on user input.
+       Written by Kabindra Suwal - Shows Conditional Expressions
+    Args:
+        fname(str): The first name of the person.
+        lname(str): The last name of the person.
+        email(str): The UMD email of the person.
+        org(str): The organization the event is for.
+
+    Raises:
+        IndexError: Indicates that user selection is out of the range of 
+        location options.
+    """
     print(f"Welcome to Terp Planner {fname} {lname}!")
     user = User(fname, lname, email, orgname)
     id_set = set()
@@ -307,7 +336,11 @@ def main(fname, lname, email, orgname):
 
 
 
-def parse_args(comline):    
+def parse_args(comline):  
+    """
+    Written by Sandra Aching - Shows the Argument Parser class and sequence 
+    unpacking
+    """  
     parser = ArgumentParser()
     parser.add_argument("fname", help="first name of the student")
     parser.add_argument("lname", help = "last name of the student")
