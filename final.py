@@ -78,8 +78,7 @@ class User:
         """
         org_list = []
         with open(org_file, "r", encoding="utf-8") as f:
-            for line in f:
-                org_list.append(line.strip())
+            org_list = [line.strip() for line in f]
         
         if self.org in org_list:
             return True
